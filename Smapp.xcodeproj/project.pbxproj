@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		029035C022338343B08B0FF5 /* Pods_SmappTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B47BB52F436E357921D725D5 /* Pods_SmappTests.framework */; };
+		0F135CC760721A7431780797 /* Pods_Smapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6B33BD6CBE610B2259B34E /* Pods_Smapp.framework */; };
+		6331B0C854509AE3AD016F4C /* Pods_SmappUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F76CBEB6194053CBF21A8794 /* Pods_SmappUITests.framework */; };
 		B5E156801E1DDCE900858C99 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1567F1E1DDCE900858C99 /* AppDelegate.swift */; };
 		B5E156821E1DDCE900858C99 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E156811E1DDCE900858C99 /* ViewController.swift */; };
 		B5E156851E1DDCE900858C99 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5E156831E1DDCE900858C99 /* Main.storyboard */; };
@@ -14,6 +17,8 @@
 		B5E1568A1E1DDCE900858C99 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5E156881E1DDCE900858C99 /* LaunchScreen.storyboard */; };
 		B5E156951E1DDCEA00858C99 /* SmappTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E156941E1DDCEA00858C99 /* SmappTests.swift */; };
 		B5E156A01E1DDCEA00858C99 /* SmappUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1569F1E1DDCEA00858C99 /* SmappUITests.swift */; };
+		B5E156AE1E1DDD8300858C99 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5E156AD1E1DDD8300858C99 /* GoogleService-Info.plist */; };
+		B5E156B01E1DF66800858C99 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E156AF1E1DF66800858C99 /* RegisterViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +39,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2C67D391BBEC4CA8BEC6AA37 /* Pods-SmappTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmappTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SmappTests/Pods-SmappTests.release.xcconfig"; sourceTree = "<group>"; };
+		2D6B33BD6CBE610B2259B34E /* Pods_Smapp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Smapp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4280A5BE52DBEF91D72235FB /* Pods-Smapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Smapp.release.xcconfig"; path = "Pods/Target Support Files/Pods-Smapp/Pods-Smapp.release.xcconfig"; sourceTree = "<group>"; };
+		4DD0A86386BA818AC377AECF /* Pods-SmappTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmappTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SmappTests/Pods-SmappTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4FBAA4DD7FFE4320817D3F04 /* Pods-SmappUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmappUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SmappUITests/Pods-SmappUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		876BCC59CBB2E7BFD858D980 /* Pods-Smapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Smapp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Smapp/Pods-Smapp.debug.xcconfig"; sourceTree = "<group>"; };
+		B47BB52F436E357921D725D5 /* Pods_SmappTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmappTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5E1567C1E1DDCE900858C99 /* Smapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Smapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5E1567F1E1DDCE900858C99 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5E156811E1DDCE900858C99 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -47,6 +59,10 @@
 		B5E1569B1E1DDCEA00858C99 /* SmappUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmappUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5E1569F1E1DDCEA00858C99 /* SmappUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmappUITests.swift; sourceTree = "<group>"; };
 		B5E156A11E1DDCEA00858C99 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B5E156AD1E1DDD8300858C99 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B5E156AF1E1DF66800858C99 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		ECBB16334E3AB83FB5462AC2 /* Pods-SmappUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmappUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SmappUITests/Pods-SmappUITests.release.xcconfig"; sourceTree = "<group>"; };
+		F76CBEB6194053CBF21A8794 /* Pods_SmappUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmappUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F135CC760721A7431780797 /* Pods_Smapp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				029035C022338343B08B0FF5 /* Pods_SmappTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,12 +86,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6331B0C854509AE3AD016F4C /* Pods_SmappUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		761C3C0F98BA2C722E1C761A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				876BCC59CBB2E7BFD858D980 /* Pods-Smapp.debug.xcconfig */,
+				4280A5BE52DBEF91D72235FB /* Pods-Smapp.release.xcconfig */,
+				4DD0A86386BA818AC377AECF /* Pods-SmappTests.debug.xcconfig */,
+				2C67D391BBEC4CA8BEC6AA37 /* Pods-SmappTests.release.xcconfig */,
+				4FBAA4DD7FFE4320817D3F04 /* Pods-SmappUITests.debug.xcconfig */,
+				ECBB16334E3AB83FB5462AC2 /* Pods-SmappUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		86E38CDE2E733F53CC819833 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2D6B33BD6CBE610B2259B34E /* Pods_Smapp.framework */,
+				B47BB52F436E357921D725D5 /* Pods_SmappTests.framework */,
+				F76CBEB6194053CBF21A8794 /* Pods_SmappUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B5E156731E1DDCE800858C99 = {
 			isa = PBXGroup;
 			children = (
@@ -81,6 +123,8 @@
 				B5E156931E1DDCEA00858C99 /* SmappTests */,
 				B5E1569E1E1DDCEA00858C99 /* SmappUITests */,
 				B5E1567D1E1DDCE900858C99 /* Products */,
+				761C3C0F98BA2C722E1C761A /* Pods */,
+				86E38CDE2E733F53CC819833 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -100,8 +144,10 @@
 				B5E1567F1E1DDCE900858C99 /* AppDelegate.swift */,
 				B5E156811E1DDCE900858C99 /* ViewController.swift */,
 				B5E156831E1DDCE900858C99 /* Main.storyboard */,
+				B5E156AF1E1DF66800858C99 /* RegisterViewController.swift */,
 				B5E156861E1DDCE900858C99 /* Assets.xcassets */,
 				B5E156881E1DDCE900858C99 /* LaunchScreen.storyboard */,
+				B5E156AD1E1DDD8300858C99 /* GoogleService-Info.plist */,
 				B5E1568B1E1DDCE900858C99 /* Info.plist */,
 			);
 			path = Smapp;
@@ -132,9 +178,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B5E156A41E1DDCEA00858C99 /* Build configuration list for PBXNativeTarget "Smapp" */;
 			buildPhases = (
+				C453BA625345F7B9E80C7E31 /* [CP] Check Pods Manifest.lock */,
 				B5E156781E1DDCE900858C99 /* Sources */,
 				B5E156791E1DDCE900858C99 /* Frameworks */,
 				B5E1567A1E1DDCE900858C99 /* Resources */,
+				5F4A3032017121377BFC3E9F /* [CP] Embed Pods Frameworks */,
+				530F7EA92EEBAAEC3CB81A04 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -149,9 +198,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B5E156A71E1DDCEA00858C99 /* Build configuration list for PBXNativeTarget "SmappTests" */;
 			buildPhases = (
+				5E766293B916664EBE111989 /* [CP] Check Pods Manifest.lock */,
 				B5E1568C1E1DDCEA00858C99 /* Sources */,
 				B5E1568D1E1DDCEA00858C99 /* Frameworks */,
 				B5E1568E1E1DDCEA00858C99 /* Resources */,
+				2EC9BD191A595D8E2D605E61 /* [CP] Embed Pods Frameworks */,
+				D3F89BBD4D7378E35988B2B0 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -167,9 +219,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B5E156AA1E1DDCEA00858C99 /* Build configuration list for PBXNativeTarget "SmappUITests" */;
 			buildPhases = (
+				5DC77B475C86F5B6DCADB635 /* [CP] Check Pods Manifest.lock */,
 				B5E156971E1DDCEA00858C99 /* Sources */,
 				B5E156981E1DDCEA00858C99 /* Frameworks */,
 				B5E156991E1DDCEA00858C99 /* Resources */,
+				E73FC2C2AEF2883C9966472D /* [CP] Embed Pods Frameworks */,
+				3BC2F7CA535A7B9465AFC443 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -233,6 +288,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5E1568A1E1DDCE900858C99 /* LaunchScreen.storyboard in Resources */,
+				B5E156AE1E1DDD8300858C99 /* GoogleService-Info.plist in Resources */,
 				B5E156871E1DDCE900858C99 /* Assets.xcassets in Resources */,
 				B5E156851E1DDCE900858C99 /* Main.storyboard in Resources */,
 			);
@@ -254,11 +310,150 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2EC9BD191A595D8E2D605E61 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SmappTests/Pods-SmappTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3BC2F7CA535A7B9465AFC443 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SmappUITests/Pods-SmappUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		530F7EA92EEBAAEC3CB81A04 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Smapp/Pods-Smapp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5DC77B475C86F5B6DCADB635 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		5E766293B916664EBE111989 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		5F4A3032017121377BFC3E9F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Smapp/Pods-Smapp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C453BA625345F7B9E80C7E31 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D3F89BBD4D7378E35988B2B0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SmappTests/Pods-SmappTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E73FC2C2AEF2883C9966472D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SmappUITests/Pods-SmappUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B5E156781E1DDCE900858C99 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5E156B01E1DF66800858C99 /* RegisterViewController.swift in Sources */,
 				B5E156821E1DDCE900858C99 /* ViewController.swift in Sources */,
 				B5E156801E1DDCE900858C99 /* AppDelegate.swift in Sources */,
 			);
@@ -408,6 +603,7 @@
 		};
 		B5E156A51E1DDCEA00858C99 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 876BCC59CBB2E7BFD858D980 /* Pods-Smapp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Smapp/Info.plist;
@@ -420,6 +616,7 @@
 		};
 		B5E156A61E1DDCEA00858C99 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4280A5BE52DBEF91D72235FB /* Pods-Smapp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Smapp/Info.plist;
@@ -432,6 +629,7 @@
 		};
 		B5E156A81E1DDCEA00858C99 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4DD0A86386BA818AC377AECF /* Pods-SmappTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -446,6 +644,7 @@
 		};
 		B5E156A91E1DDCEA00858C99 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C67D391BBEC4CA8BEC6AA37 /* Pods-SmappTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -460,6 +659,7 @@
 		};
 		B5E156AB1E1DDCEA00858C99 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4FBAA4DD7FFE4320817D3F04 /* Pods-SmappUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = SmappUITests/Info.plist;
@@ -473,6 +673,7 @@
 		};
 		B5E156AC1E1DDCEA00858C99 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ECBB16334E3AB83FB5462AC2 /* Pods-SmappUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = SmappUITests/Info.plist;
@@ -503,6 +704,7 @@
 				B5E156A61E1DDCEA00858C99 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B5E156A71E1DDCEA00858C99 /* Build configuration list for PBXNativeTarget "SmappTests" */ = {
 			isa = XCConfigurationList;
@@ -511,6 +713,7 @@
 				B5E156A91E1DDCEA00858C99 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B5E156AA1E1DDCEA00858C99 /* Build configuration list for PBXNativeTarget "SmappUITests" */ = {
 			isa = XCConfigurationList;
@@ -519,6 +722,7 @@
 				B5E156AC1E1DDCEA00858C99 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
