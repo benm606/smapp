@@ -11,7 +11,7 @@ import Firebase
 import FirebaseAuth
 
 
-class ViewController: UIViewController{ //,UITextFieldDelegate {
+class ViewController: UIViewController{
 
     
     @IBOutlet weak var usernameTextField: UITextField!
@@ -47,13 +47,6 @@ class ViewController: UIViewController{ //,UITextFieldDelegate {
         
         
     })
-        /*usernameTextField.delegate = self
-           
-        
-        func textFieldShouldReturn(usernameTextField: UITextField!) -> Bool {
-            usernameTextField.resignFirstResponder()
-            return true
-        }*/
         
     }
     
