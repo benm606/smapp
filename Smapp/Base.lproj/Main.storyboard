@@ -200,36 +200,83 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IHc-hb-gdt">
-                                <rect key="frame" x="141" y="406" width="93" height="30"/>
+                                <rect key="frame" x="141" y="560" width="93" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="93" id="OaU-fz-uDJ"/>
-                                    <constraint firstAttribute="height" constant="30" id="mrM-Tb-NvY"/>
+                                    <constraint firstAttribute="width" constant="93" id="Py2-SL-JuP"/>
+                                    <constraint firstAttribute="height" constant="30" id="krK-WM-WVT"/>
                                 </constraints>
                                 <state key="normal" title="Post"/>
                                 <connections>
                                     <action selector="postTapped:" destination="uY7-Yb-MQp" eventType="touchUpInside" id="7s2-P2-5mg"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8gK-YU-RB6">
+                                <rect key="frame" x="87" y="352" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="5tU-aA-L69"/>
+                                    <constraint firstAttribute="height" constant="200" id="ufy-yd-77Y"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EdR-iS-23w">
+                                <rect key="frame" x="143" y="437" width="89" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="89" id="5Dd-O0-jIm"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="Bhl-fG-8ZS"/>
+                                    <constraint firstAttribute="height" constant="30" id="SCI-x2-vuO"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="89" id="rIQ-8Z-RR3"/>
+                                </constraints>
+                                <state key="normal" title="Select Image"/>
+                                <connections>
+                                    <action selector="selectImageTapped:" destination="uY7-Yb-MQp" eventType="touchUpInside" id="BaF-Hg-OHe"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="WaK-Mp-0Xv" firstAttribute="centerX" secondItem="2NM-jh-3uh" secondAttribute="centerX" id="0dZ-dA-UnB"/>
-                            <constraint firstItem="IHc-hb-gdt" firstAttribute="centerX" secondItem="2NM-jh-3uh" secondAttribute="centerX" id="23a-Xn-1JQ"/>
+                            <constraint firstItem="IHc-hb-gdt" firstAttribute="centerX" secondItem="2NM-jh-3uh" secondAttribute="centerX" id="3Fd-Qo-de4"/>
                             <constraint firstItem="WaK-Mp-0Xv" firstAttribute="top" secondItem="B7J-Of-sx2" secondAttribute="bottom" constant="72" id="FQl-SE-kgN"/>
                             <constraint firstItem="QpX-gX-C4e" firstAttribute="centerX" secondItem="2NM-jh-3uh" secondAttribute="centerX" id="GJW-R6-7xL"/>
-                            <constraint firstItem="IHc-hb-gdt" firstAttribute="top" secondItem="QpX-gX-C4e" secondAttribute="bottom" constant="67" id="LN6-1V-ZdQ"/>
+                            <constraint firstItem="8gK-YU-RB6" firstAttribute="top" secondItem="QpX-gX-C4e" secondAttribute="bottom" constant="13" id="Kfn-hU-sg6"/>
+                            <constraint firstItem="EdR-iS-23w" firstAttribute="top" secondItem="QpX-gX-C4e" secondAttribute="bottom" constant="98" id="QIX-jP-fLG"/>
                             <constraint firstItem="QpX-gX-C4e" firstAttribute="top" secondItem="WaK-Mp-0Xv" secondAttribute="bottom" constant="45" id="RtV-x1-8Ur"/>
+                            <constraint firstItem="EdR-iS-23w" firstAttribute="centerX" secondItem="8gK-YU-RB6" secondAttribute="centerX" id="kbs-QI-BgG"/>
+                            <constraint firstItem="8gK-YU-RB6" firstAttribute="centerX" secondItem="2NM-jh-3uh" secondAttribute="centerX" id="n1x-dx-32G"/>
+                            <constraint firstItem="wbk-oE-L92" firstAttribute="top" secondItem="IHc-hb-gdt" secondAttribute="bottom" constant="77" id="nbW-8J-ovm"/>
+                            <constraint firstItem="EdR-iS-23w" firstAttribute="centerY" secondItem="8gK-YU-RB6" secondAttribute="centerY" id="nhM-xF-7Nb"/>
+                            <constraint firstItem="EdR-iS-23w" firstAttribute="centerX" secondItem="2NM-jh-3uh" secondAttribute="centerX" id="sQs-tA-iMx"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Post" id="KkT-GE-K4z"/>
                     <connections>
                         <outlet property="contentTextView" destination="QpX-gX-C4e" id="KIp-nM-MYV"/>
+                        <outlet property="previewImageView" destination="8gK-YU-RB6" id="UJ2-Uo-Q4i"/>
+                        <outlet property="selectImageButton" destination="EdR-iS-23w" id="VqW-tN-A5b"/>
                         <outlet property="titleTextField" destination="WaK-Mp-0Xv" id="4bn-v9-oxG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ITc-3l-8Qd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1813.5999999999999" y="138.98050974512745"/>
+        </scene>
+        <!--Smapp-->
+        <scene sceneID="5rE-za-RC7">
+            <objects>
+                <viewController id="REf-Gb-WUJ" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ivd-1h-qmc"/>
+                        <viewControllerLayoutGuide type="bottom" id="Jn3-tM-Pvv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="srz-6e-pU9">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Smapp" id="8wb-wC-Jer"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="edC-EK-mrj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2540" y="147"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="JsT-4D-I4p">
@@ -248,6 +295,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lcw-lc-iVn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1814" y="-540"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ntR-gk-cSm">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Iuh-jk-TJA" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="LIJ-UT-bfm">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="REf-Gb-WUJ" kind="relationship" relationship="rootViewController" id="Ka0-tK-27t"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IE0-aQ-euS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2540" y="-540"/>
         </scene>
     </scenes>
 </document>
