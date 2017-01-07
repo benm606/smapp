@@ -19,11 +19,15 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
     @IBOutlet weak var selectImageButton: UIButton!
     
     var imageFileName = ""
+    var imageUploadedToFirebase = false    //used to make sure photo is uploaded fully before being posted
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        self.navigationController?.navigationBar.alpha = 0    //set top bar coloring
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -38,8 +42,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         //runs when photo is picked from library
-        if let pickedImage = info[UIImagePickerControllerOriginalImage] as?
-            UIImage{
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage{
             self.previewImageView.image = pickedImage
             self.selectImageButton.isEnabled = false  //hide select image button
             self.selectImageButton.isHidden = true
@@ -48,32 +51,49 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
         }
     }
     
-    @IBAction func postTapped(_ sender: Any) {     //post to firebase databse
-        
-        if let uid = FIRAuth.auth()?.currentUser?.uid{   ///make sure all fields r filled and create postable object
-            if let title = titleTextField.text{
-                if let content = contentTextView.text{
-                    let postObject: Dictionary<String, Any> = [
-                        "uid" : uid,
-                        "title" : title,
-                        "content" : content,
-                        "image" : imageFileName
-                    ]
-                    
-                    FIRDatabase.database().reference().child("posts").childByAutoId().setValue(postObject)
-                    
-                    let alert = UIAlertController(title: "Success", message: "Post sent", preferredStyle: .alert)  // popup message to say posted
-                    alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
-
-                    
-                    print("posted to Firebase")
-                }
+    @IBAction func postTapped(_ sender: AnyObject) {     //post to firebase databse
+        if(self.imageUploadedToFirebase){
+            if let uid = FIRAuth.auth()?.currentUser?.uid{   ///make sure all fields r filled and create postable object
+                
+                FIRDatabase.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: {(snapshot) in
+                    if let userDictionary = snapshot.value as? [String: AnyObject]{
+                        for user in userDictionary{
+                            if let username = user.value as? String{
+                                if let title = self.titleTextField.text{
+                                    if let content = self.contentTextView.text{
+                                        let postObject: Dictionary<String, Any> = [
+                                            "uid" : uid,
+                                            "title" : title,
+                                            "content" : content,
+                                            "username" : username,
+                                            "image" : self.imageFileName
+                                        ]
+                                        
+                                        FIRDatabase.database().reference().child("posts").childByAutoId().setValue(postObject)
+                                        
+                                        let alert = UIAlertController(title: "Success", message: "Post sent", preferredStyle: .alert)  // popup message to say posted
+                                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) in
+                                            //runs when OK pressed, brings to main vc
+                                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "MainVC")
+                                            self.present(vc!, animated: true, completion: nil)
+                                        }))
+                                        self.present(alert, animated: true, completion: nil)
+                                        
+                                        print("posted to Firebase")
+                                        self.imageUploadedToFirebase = false
+                                    }
+                                }
+                            }
+                            
+                        }
+                    }
+                })
+                
             }
         }
-     
+        
     }
-
+    
     @IBAction func selectImageTapped(_ sender: Any) {
         let picker = UIImagePickerController()
         picker.delegate = self
@@ -91,6 +111,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
             if error == nil{
                 //success
                 print("Successfully uploaded picture")
+                self.imageUploadedToFirebase = true
                 self.imageFileName = "\(randomName as String).jpg"
             }else{
                 //error

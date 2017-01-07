@@ -22,6 +22,14 @@ class ViewController: UIViewController{
         // Do any additional setup after loading the view, typically from a nib.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        if FIRAuth.auth()?.currentUser != nil{             //checks if user already signed in
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "MainVC")//loggedin so set mainvc(posts) as vc
+            self.present(vc!, animated: false, completion: nil)
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -41,7 +49,7 @@ class ViewController: UIViewController{
                 self.present(alert, animated: true, completion: nil)
             }else{
                 //success
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "PostVC")  //go to posts viewcontroller
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "MainVC")  //go to posts viewcontroller
                 self.present(vc!, animated: true, completion: nil)
             }
             

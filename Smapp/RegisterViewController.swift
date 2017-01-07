@@ -12,8 +12,9 @@ import FirebaseAuth
 
 class RegisterViewController: UIViewController {
     
-    @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var usernameTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var emailTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,9 +30,10 @@ class RegisterViewController: UIViewController {
     @IBAction func createAccountTapped(_ sender: Any) {
         
         let username = usernameTextField.text
+        let email = emailTextField.text
         let password = passwordTextField.text
         
-        FIRAuth.auth()?.createUser(withEmail: username!, password: password!, completion: { (user, error) in
+        FIRAuth.auth()?.createUser(withEmail: email!, password: password!, completion: { (user, error) in
             if error != nil{            //error creating accnt
                 
                 let errorMessage = error?.localizedDescription
@@ -41,8 +43,15 @@ class RegisterViewController: UIViewController {
                 self.present(alert, animated: true, completion: nil)
             }else{                      //accnt created
                 //success
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "PostVC")  //go to posts viewcontroller
-                self.present(vc!, animated: true, completion: nil)            }
+                
+                if let uid = FIRAuth.auth()?.currentUser?.uid{
+                    let userRef = FIRDatabase.database().reference().child("users").child(uid)
+                    let object = ["username" : username]
+                    userRef.setValue(object)   //save username to userRef location-
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "MainVC")  //go to posts viewcontroller
+                    self.present(vc!, animated: true, completion: nil)            }
+            }
+            
         })
         
     }

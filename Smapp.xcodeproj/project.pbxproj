@@ -11,6 +11,8 @@
 		0F135CC760721A7431780797 /* Pods_Smapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6B33BD6CBE610B2259B34E /* Pods_Smapp.framework */; };
 		6331B0C854509AE3AD016F4C /* Pods_SmappUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F76CBEB6194053CBF21A8794 /* Pods_SmappUITests.framework */; };
 		B53B6D741E1F48730007F521 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53B6D731E1F48730007F521 /* PostViewController.swift */; };
+		B53B6D761E2017430007F521 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53B6D751E2017410007F521 /* PostTableViewCell.swift */; };
+		B53B6D781E201A140007F521 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53B6D771E201A140007F521 /* MainViewController.swift */; };
 		B5E156801E1DDCE900858C99 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1567F1E1DDCE900858C99 /* AppDelegate.swift */; };
 		B5E156821E1DDCE900858C99 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E156811E1DDCE900858C99 /* ViewController.swift */; };
 		B5E156851E1DDCE900858C99 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5E156831E1DDCE900858C99 /* Main.storyboard */; };
@@ -48,6 +50,8 @@
 		876BCC59CBB2E7BFD858D980 /* Pods-Smapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Smapp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Smapp/Pods-Smapp.debug.xcconfig"; sourceTree = "<group>"; };
 		B47BB52F436E357921D725D5 /* Pods_SmappTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmappTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B53B6D731E1F48730007F521 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
+		B53B6D751E2017410007F521 /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
+		B53B6D771E201A140007F521 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		B5E1567C1E1DDCE900858C99 /* Smapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Smapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5E1567F1E1DDCE900858C99 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5E156811E1DDCE900858C99 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -148,6 +152,8 @@
 				B53B6D731E1F48730007F521 /* PostViewController.swift */,
 				B5E156AF1E1DF66800858C99 /* RegisterViewController.swift */,
 				B5E156831E1DDCE900858C99 /* Main.storyboard */,
+				B53B6D771E201A140007F521 /* MainViewController.swift */,
+				B53B6D751E2017410007F521 /* PostTableViewCell.swift */,
 				B5E156861E1DDCE900858C99 /* Assets.xcassets */,
 				B5E156881E1DDCE900858C99 /* LaunchScreen.storyboard */,
 				B5E156AD1E1DDD8300858C99 /* GoogleService-Info.plist */,
@@ -459,6 +465,8 @@
 			files = (
 				B53B6D741E1F48730007F521 /* PostViewController.swift in Sources */,
 				B5E156B01E1DF66800858C99 /* RegisterViewController.swift in Sources */,
+				B53B6D761E2017430007F521 /* PostTableViewCell.swift in Sources */,
+				B53B6D781E201A140007F521 /* MainViewController.swift in Sources */,
 				B5E156821E1DDCE900858C99 /* ViewController.swift in Sources */,
 				B5E156801E1DDCE900858C99 /* AppDelegate.swift in Sources */,
 			);

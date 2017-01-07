@@ -6,13 +6,14 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Smapp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginVC" id="BYZ-38-t0r" customClass="ViewController" customModule="Smapp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -103,7 +104,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aJx-Pt-2vN">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aJx-Pt-2vN">
                                 <rect key="frame" x="89" y="162" width="197" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="197" id="G2M-Xf-DYv"/>
@@ -145,22 +146,35 @@
                                     <segue destination="BYZ-38-t0r" kind="show" id="2Rq-qn-dhd"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TLH-DO-RDJ">
+                                <rect key="frame" x="89" y="103" width="197" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="ifE-Nu-IE5"/>
+                                    <constraint firstAttribute="width" constant="197" id="sp2-Ea-pka"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="EpY-U7-JbA" firstAttribute="top" secondItem="aJx-Pt-2vN" secondAttribute="bottom" constant="25" id="7Hm-Ng-Nuo"/>
                             <constraint firstItem="HDD-v7-syc" firstAttribute="top" secondItem="EpY-U7-JbA" secondAttribute="bottom" constant="45" id="G6z-mw-kFR"/>
+                            <constraint firstItem="TLH-DO-RDJ" firstAttribute="centerX" secondItem="iEV-Ct-b7r" secondAttribute="centerX" id="HYb-p0-2w5"/>
                             <constraint firstItem="dBE-sg-kpv" firstAttribute="top" secondItem="OIb-S7-bDH" secondAttribute="bottom" constant="115" id="NAb-sX-G2S"/>
                             <constraint firstItem="OIb-S7-bDH" firstAttribute="centerX" secondItem="iEV-Ct-b7r" secondAttribute="centerX" id="Uq1-ZT-8GF"/>
                             <constraint firstItem="aJx-Pt-2vN" firstAttribute="top" secondItem="qk0-XQ-GZP" secondAttribute="bottom" constant="142" id="fQv-XE-DcQ"/>
                             <constraint firstItem="aJx-Pt-2vN" firstAttribute="centerX" secondItem="iEV-Ct-b7r" secondAttribute="centerX" id="maI-6c-MsH"/>
+                            <constraint firstItem="aJx-Pt-2vN" firstAttribute="top" secondItem="TLH-DO-RDJ" secondAttribute="bottom" constant="29" id="qJ7-TI-1fr"/>
                             <constraint firstItem="EpY-U7-JbA" firstAttribute="centerX" secondItem="iEV-Ct-b7r" secondAttribute="centerX" id="ult-E5-BcJ"/>
                             <constraint firstItem="HDD-v7-syc" firstAttribute="centerX" secondItem="iEV-Ct-b7r" secondAttribute="centerX" id="wX6-4m-J2q"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="emailTextField" destination="aJx-Pt-2vN" id="shp-OF-Xxk"/>
                         <outlet property="passwordTextField" destination="EpY-U7-JbA" id="8Eh-0U-2EF"/>
-                        <outlet property="usernameTextField" destination="aJx-Pt-2vN" id="wNs-bS-46C"/>
+                        <outlet property="usernameTextField" destination="TLH-DO-RDJ" id="B8z-jw-h6C"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bny-Bp-aRW" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -247,7 +261,13 @@
                             <constraint firstItem="EdR-iS-23w" firstAttribute="centerX" secondItem="2NM-jh-3uh" secondAttribute="centerX" id="sQs-tA-iMx"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Post" id="KkT-GE-K4z"/>
+                    <navigationItem key="navigationItem" title="Post" id="KkT-GE-K4z">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="iKW-Y6-0zA">
+                            <connections>
+                                <segue destination="Iuh-jk-TJA" kind="show" animates="NO" id="b46-GG-j8R"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="contentTextView" destination="QpX-gX-C4e" id="KIp-nM-MYV"/>
                         <outlet property="previewImageView" destination="8gK-YU-RB6" id="UJ2-Uo-Q4i"/>
@@ -262,7 +282,7 @@
         <!--Smapp-->
         <scene sceneID="5rE-za-RC7">
             <objects>
-                <viewController id="REf-Gb-WUJ" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="REf-Gb-WUJ" customClass="MainViewController" customModule="Smapp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ivd-1h-qmc"/>
                         <viewControllerLayoutGuide type="bottom" id="Jn3-tM-Pvv"/>
@@ -270,13 +290,93 @@
                     <view key="view" contentMode="scaleToFill" id="srz-6e-pU9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="457" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kBm-KQ-6Rw">
+                                <rect key="frame" x="0.0" y="72" width="375" height="595"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="457" id="J6e-Zm-0tx" customClass="PostTableViewCell" customModule="Smapp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="457"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="J6e-Zm-0tx" id="goR-45-s4o">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="456"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3AE-Rj-dYw">
+                                                    <rect key="frame" x="8" y="8" width="359" height="39"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="359" id="1HN-GE-BEG"/>
+                                                        <constraint firstAttribute="height" constant="39" id="dVU-oT-ulA"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Georgia" family="Georgia" pointSize="20"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="loV-8t-j8v">
+                                                    <rect key="frame" x="37" y="54" width="300" height="300"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="300" id="14J-BM-3mr"/>
+                                                        <constraint firstAttribute="height" constant="300" id="Pou-Se-Vcy"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="This is the Content" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sfc-ew-1gm">
+                                                    <rect key="frame" x="23" y="362" width="329" height="78"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="78" id="DUg-pd-amx"/>
+                                                        <constraint firstAttribute="width" constant="329" id="Hvl-9Y-r2P"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="3AE-Rj-dYw" firstAttribute="top" secondItem="goR-45-s4o" secondAttribute="topMargin" id="5nw-30-Muc"/>
+                                                <constraint firstItem="sfc-ew-1gm" firstAttribute="centerX" secondItem="goR-45-s4o" secondAttribute="centerX" id="Wxu-6F-7xq"/>
+                                                <constraint firstItem="3AE-Rj-dYw" firstAttribute="trailing" secondItem="goR-45-s4o" secondAttribute="trailingMargin" id="hBf-ZL-pyQ"/>
+                                                <constraint firstItem="sfc-ew-1gm" firstAttribute="top" secondItem="loV-8t-j8v" secondAttribute="bottom" constant="8" id="m5s-FB-Cpd"/>
+                                                <constraint firstItem="loV-8t-j8v" firstAttribute="top" secondItem="3AE-Rj-dYw" secondAttribute="bottom" constant="7" id="qtK-Fb-2no"/>
+                                                <constraint firstItem="loV-8t-j8v" firstAttribute="centerX" secondItem="goR-45-s4o" secondAttribute="centerX" id="sLq-7S-gUx"/>
+                                                <constraint firstItem="3AE-Rj-dYw" firstAttribute="leading" secondItem="goR-45-s4o" secondAttribute="leadingMargin" id="wv1-fB-Fe6"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="contentTextView" destination="sfc-ew-1gm" id="gL6-M8-Xik"/>
+                                            <outlet property="postImageView" destination="loV-8t-j8v" id="3Sz-ML-A3p"/>
+                                            <outlet property="titleLabel" destination="3AE-Rj-dYw" id="wFk-re-utc"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Jn3-tM-Pvv" firstAttribute="top" secondItem="kBm-KQ-6Rw" secondAttribute="bottom" id="Nz7-3A-KBT"/>
+                            <constraint firstAttribute="trailing" secondItem="kBm-KQ-6Rw" secondAttribute="trailing" id="RJx-4I-ZcS"/>
+                            <constraint firstItem="kBm-KQ-6Rw" firstAttribute="centerX" secondItem="srz-6e-pU9" secondAttribute="centerX" id="c7Y-aQ-YGf"/>
+                            <constraint firstItem="kBm-KQ-6Rw" firstAttribute="leading" secondItem="srz-6e-pU9" secondAttribute="leading" id="nVo-t8-bWZ"/>
+                            <constraint firstItem="kBm-KQ-6Rw" firstAttribute="top" secondItem="ivd-1h-qmc" secondAttribute="bottom" constant="8" id="zkc-VX-TKa"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Smapp" id="8wb-wC-Jer"/>
+                    <navigationItem key="navigationItem" title="Smapp" id="8wb-wC-Jer">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="XMi-uN-PzP">
+                            <connections>
+                                <action selector="logOutTapped:" destination="REf-Gb-WUJ" id="B1r-sp-mCI"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="UWl-Nu-Y6G">
+                            <connections>
+                                <segue destination="JI8-uM-qUt" kind="show" animates="NO" id="AXf-Eg-BuY"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="postsTableView" destination="kBm-KQ-6Rw" id="4gD-01-bQV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="edC-EK-mrj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2540" y="147"/>
+            <point key="canvasLocation" x="2540" y="146.17691154422789"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="JsT-4D-I4p">
@@ -299,7 +399,7 @@
         <!--Navigation Controller-->
         <scene sceneID="ntR-gk-cSm">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Iuh-jk-TJA" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MainVC" automaticallyAdjustsScrollViewInsets="NO" id="Iuh-jk-TJA" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="LIJ-UT-bfm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
