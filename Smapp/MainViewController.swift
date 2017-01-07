@@ -26,12 +26,22 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     var touchPressedY = CGFloat()
     var touchReleasedY = CGFloat()
     var touchDown = false
+    var selectionLikeHighlighted = false
+    var selectionDislikeHighlighted = false
+    var selectionShareHighlighted = false
+    var selectionSaveHighlighted = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.postsTableView.delegate = self
         self.postsTableView.dataSource = self
+        
+        self.selectionCenterImageView.alpha = 0
+        self.selectionLikeImageView.alpha = 0
+        self.selectionDislikeImageView.alpha = 0
+        self.selectionSaveImageView.alpha = 0
+        self.selectionShareImageView.alpha = 0
         
         self.navigationController?.navigationBar.alpha = 0    //set top bar coloring
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
@@ -130,12 +140,129 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if touches.first?.view == selectionCenterImageView{
-            print("b")
+        if let touch = touches.first{
+            let touchPoint = touch.location(in: self.selectionCenterImageView)
+            if(self.selectionCenterImageView.bounds.contains(touchPoint)){     //if center of wheel touced
+                UIView.animate(withDuration: 0.2, animations: {     //highlight selection wheel spokes
+                    self.selectionCenterImageView.alpha = 0.7
+                    self.selectionLikeImageView.alpha = 0.4
+                    self.selectionDislikeImageView.alpha = 0.4
+                    self.selectionSaveImageView.alpha = 0.4
+                    self.selectionShareImageView.alpha = 0.4
+                })
+                selectionLikeHighlighted = false     //set which spoke highlighted for end action
+                selectionDislikeHighlighted = false
+                selectionShareHighlighted = false
+                selectionSaveHighlighted = false
+            }
         }
+        //if touches.first?.view == selectionCenterImageView
+        
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touch = touches.first{
+            var touchPoint = touch.location(in: self.selectionLikeImageView)
+            if(self.selectionLikeImageView.bounds.contains(touchPoint)){
+                UIView.animate(withDuration: 0.1, animations: {     //highlight selection wheel spokes
+                    self.selectionCenterImageView.alpha = 0.4
+                    self.selectionLikeImageView.alpha = 0.7
+                    self.selectionDislikeImageView.alpha = 0.4
+                    self.selectionSaveImageView.alpha = 0.4
+                    self.selectionShareImageView.alpha = 0.4
+                })
+                selectionLikeHighlighted = true
+                selectionDislikeHighlighted = false
+                selectionShareHighlighted = false
+                selectionSaveHighlighted = false
+            }
+            touchPoint = touch.location(in: self.selectionDislikeImageView)
+            if(self.selectionDislikeImageView.bounds.contains(touchPoint)){
+                UIView.animate(withDuration: 0.1, animations: {     //highlight selection wheel spokes
+                    self.selectionCenterImageView.alpha = 0.4
+                    self.selectionLikeImageView.alpha = 0.4
+                    self.selectionDislikeImageView.alpha = 0.7
+                    self.selectionSaveImageView.alpha = 0.4
+                    self.selectionShareImageView.alpha = 0.4
+                })
+                selectionLikeHighlighted = false
+                selectionDislikeHighlighted = true
+                selectionShareHighlighted = false
+                selectionSaveHighlighted = false
+            }
+            touchPoint = touch.location(in: self.selectionShareImageView)
+            if(self.selectionShareImageView.bounds.contains(touchPoint)){
+                UIView.animate(withDuration: 0.1, animations: {     //highlight selection wheel spokes
+                    self.selectionCenterImageView.alpha = 0.4
+                    self.selectionLikeImageView.alpha = 0.4
+                    self.selectionDislikeImageView.alpha = 0.4
+                    self.selectionSaveImageView.alpha = 0.4
+                    self.selectionShareImageView.alpha = 0.7
+                })
+                selectionLikeHighlighted = false
+                selectionDislikeHighlighted = false
+                selectionShareHighlighted = true
+                selectionSaveHighlighted = false
+            }
+            touchPoint = touch.location(in: self.selectionSaveImageView)
+            if(self.selectionSaveImageView.bounds.contains(touchPoint)){
+                UIView.animate(withDuration: 0.1, animations: {     //highlight selection wheel spokes
+                    self.selectionCenterImageView.alpha = 0.4
+                    self.selectionLikeImageView.alpha = 0.4
+                    self.selectionDislikeImageView.alpha = 0.4
+                    self.selectionSaveImageView.alpha = 0.7
+                    self.selectionShareImageView.alpha = 0.4
+                })
+                selectionLikeHighlighted = false
+                selectionDislikeHighlighted = false
+                selectionShareHighlighted = false
+                selectionSaveHighlighted = true
+            }
+            touchPoint = touch.location(in: self.selectionCenterImageView)
+            if(self.selectionCenterImageView.bounds.contains(touchPoint)){
+                UIView.animate(withDuration: 0.1, animations: {     //highlight selection wheel spokes
+                    self.selectionCenterImageView.alpha = 0.7
+                    self.selectionLikeImageView.alpha = 0.4
+                    self.selectionDislikeImageView.alpha = 0.4
+                    self.selectionSaveImageView.alpha = 0.4
+                    self.selectionShareImageView.alpha = 0.4
+                })
+                selectionLikeHighlighted = false
+                selectionDislikeHighlighted = false
+                selectionShareHighlighted = false
+                selectionSaveHighlighted = false
+            }
+            
+            touchPoint = touch.location(in: self.selectionLikeImageView)
+            if(self.selectionLikeImageView.bounds.contains(touchPoint) == false){
+                touchPoint = touch.location(in: self.selectionDislikeImageView)
+                if(self.selectionDislikeImageView.bounds.contains(touchPoint) == false){
+                    touchPoint = touch.location(in: self.selectionCenterImageView)
+                    if(self.selectionCenterImageView.bounds.contains(touchPoint) == false){
+                        touchPoint = touch.location(in: self.selectionShareImageView)
+                        if(self.selectionShareImageView.bounds.contains(touchPoint) == false){
+                            touchPoint = touch.location(in: self.selectionSaveImageView)
+                            if(self.selectionSaveImageView.bounds.contains(touchPoint) == false){
+                                
+                                UIView.animate(withDuration: 0.2, animations: {     //unhighlight selection wheel spokes
+                                    self.selectionCenterImageView.alpha = 0.4
+                                    self.selectionLikeImageView.alpha = 0.4
+                                    self.selectionDislikeImageView.alpha = 0.4
+                                    self.selectionSaveImageView.alpha = 0.4
+                                    self.selectionShareImageView.alpha = 0.4
+                                })
+                                selectionLikeHighlighted = false
+                                selectionDislikeHighlighted = false
+                                selectionShareHighlighted = false
+                                selectionSaveHighlighted = false
+                            }
+                        }
+                        
+                    }
+                }
+            }
+        }
+        
         if let touchX = touches.first?.preciseLocation(in: fullPostView).x{
             if let touchY = touches.first?.preciseLocation(in: fullPostView).y{
                 if(touchDown == false){           //set the first touch x and y once
@@ -153,13 +280,32 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if(touchDown){  //make sure there was a drag
-        touchDown = false
-            let horizontalChange:CGFloat = touchReleasedX - touchPressedX   // x and y change of drag
-            let verticalChange: CGFloat = touchPressedY - touchReleasedY
+            touchDown = false
+            if(selectionLikeHighlighted){     //like image selected
+                print("Like image")
+            }
+            if(selectionDislikeHighlighted){
+                print("Dislike image")
+            }
+            if(selectionShareHighlighted){
+                print("Share/Next image")
+            }
+            if(selectionSaveHighlighted){
+                print("Save image")
+            }
+            //let horizontalChange:CGFloat = touchReleasedX - touchPressedX   // x and y change of drag
+            //let verticalChange: CGFloat = touchPressedY - touchReleasedY
             
-            print(horizontalChange)
-            print(verticalChange)
+            //print(horizontalChange)
+            //print(verticalChange)
         }
+        UIView.animate(withDuration: 0.2, animations: {     //hide selection wheel
+            self.selectionCenterImageView.alpha = 0
+            self.selectionLikeImageView.alpha = 0
+            self.selectionDislikeImageView.alpha = 0
+            self.selectionSaveImageView.alpha = 0
+            self.selectionShareImageView.alpha = 0
+        })
         super.touchesEnded(touches, with: event)
     }
     
