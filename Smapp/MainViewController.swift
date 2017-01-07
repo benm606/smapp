@@ -13,7 +13,19 @@ import FirebaseStorage
 class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var postsTableView: UITableView!
+    @IBOutlet var fullPostView: UIView!
+    @IBOutlet weak var selectionLikeImageView: UIImageView!
+    @IBOutlet weak var selectionDislikeImageView: UIImageView!
+    @IBOutlet weak var selectionSaveImageView: UIImageView!
+    @IBOutlet weak var selectionShareImageView: UIImageView!
+    @IBOutlet weak var selectionCenterImageView: UIImageView!
+    
     var posts = NSMutableArray()
+    var touchPressedX = CGFloat()
+    var touchReleasedX = CGFloat()
+    var touchPressedY = CGFloat()
+    var touchReleasedY = CGFloat()
+    var touchDown = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,7 +88,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                     //success
                     let image = UIImage(data: data!)
                     cell.postImageView.image = image
-
+                    
                     cell.titleLabel.alpha = 0                   //slowly fade in post with animation
                     cell.contentTextView.alpha = 0
                     cell.postImageView.alpha = 0
@@ -85,7 +97,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                         cell.contentTextView.alpha = 1
                         cell.postImageView.alpha = 1
                     })
-
+                    
                 }else{
                     //error
                     print("Error downloading image: \(error?.localizedDescription)")
@@ -97,16 +109,76 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     @IBAction func logOutTapped(_ sender: Any) {
-        do{
-            try FIRAuth.auth()?.signOut()
-            //successfully logged out
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "LoginVC")
-            self.present(vc!, animated: true, completion: nil)
-        }catch{
-            //if error logging out
-            print("Error logging out user.")
+        let alert = UIAlertController(title: "Log Out", message: "Are you sure?", preferredStyle: .alert)  // popup message to say posted
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+            //runs when OK pressed, brings to main vc
+            do{
+                try FIRAuth.auth()?.signOut()
+                //successfully logged out
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "LoginVC")
+                self.present(vc!, animated: true, completion: nil)
+            }catch{
+                //if error logging out
+                print("Error logging out user.")
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: { (action) in
+            //runs when no pressed, brings to main vc
+            
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if touches.first?.view == selectionCenterImageView{
+            print("b")
         }
     }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touchX = touches.first?.preciseLocation(in: fullPostView).x{
+            if let touchY = touches.first?.preciseLocation(in: fullPostView).y{
+                if(touchDown == false){           //set the first touch x and y once
+                    touchPressedX = touchX
+                    touchPressedY = touchY
+                    touchDown = true
+                }
+                touchReleasedX = touchX
+                touchReleasedY = touchY
+            }
+        }
+        super.touchesMoved(touches, with: event)
+    }
+    
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if(touchDown){  //make sure there was a drag
+        touchDown = false
+            let horizontalChange:CGFloat = touchReleasedX - touchPressedX   // x and y change of drag
+            let verticalChange: CGFloat = touchPressedY - touchReleasedY
+            
+            print(horizontalChange)
+            print(verticalChange)
+        }
+        super.touchesEnded(touches, with: event)
+    }
+    
+    
+    func likePost(_ post: String){
+        
+    }
+    func savePost(_ post: String){
+        
+    }
+    func dislikePost(_ post: String){
+        
+    }
+    func skipPost(){
+        
+    }
+    
+    
+    
     
     /*
      // Override to support conditional editing of the table view.
