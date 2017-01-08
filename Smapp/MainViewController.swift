@@ -37,9 +37,15 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     var selectionSaveHighlighted = false
     var postID: String!
     var categoryMenuOpen = false
+    var likesRank = NSMutableArray()
+    var likesRankIndexPathsRows = NSMutableArray()
+    var likesRankRow = Int()
+    var likesRankIndexPath = IndexPath()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         self.postsTableView.delegate = self
         self.postsTableView.dataSource = self
@@ -51,6 +57,9 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.selectionShareImageView.alpha = 0
         self.grayBackgroundCoat.alpha = 0
         
+        self.likesRankIndexPath = IndexPath(row: 0, section: 0)
+        self.likesRankRow = 0
+        
         //hide buttons
         self.popularCategoryButton.frame.origin = CGPoint(x: self.popularCategoryButton.frame.origin.x, y: self.categoryMenuButton.frame.origin.y)
         self.recentCategoryButton.frame.origin = CGPoint(x: self.recentCategoryButton.frame.origin.x, y: self.categoryMenuButton.frame.origin.y)
@@ -61,6 +70,8 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
         
         loadData()
+        
+        
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -78,11 +89,47 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         FIRDatabase.database().reference().child("posts").observeSingleEvent(of: .value, with: { (snapshot) in
             if let postsDictionary = snapshot.value as? [String: AnyObject]{
                 for post in postsDictionary{
+                    
+                    let post1 = post.value as! [String: AnyObject]  //indexPath.row is the post number?-
+                    
+                    let currentPostLikes = post1["likes"] as! Int       /*    sort by likes   */
+                    self.likesRank.add(currentPostLikes)
+                    self.likesRankIndexPathsRows.add(self.likesRankRow)
+                    self.likesRankRow = self.likesRankRow + 1
+                    
+                    
+                    if(self.likesRank.count > 1){
+                        for (index, element) in self.likesRank.enumerated() {
+                            if(self.likesRank[(self.likesRank.count - 1)] as! Int > element as! Int){
+                                self.likesRank.exchangeObject(at: index, withObjectAt: (self.likesRank.count - 1))
+                                self.likesRankIndexPathsRows.exchangeObject(at: index, withObjectAt: (self.likesRankIndexPathsRows.count - 1))
+                            }
+                        }
+                        
+                        print()
+                        print(self.likesRank)
+                        print(self.likesRankIndexPathsRows)
+                        print()
+                        
+                        
+                    }                                                    /*       ^^          */
+                    
+                    
                     self.posts.add(post.value)       //fill table with posts from posts folder-
                 }
+                self.likesRankRow = 1    //set as second index value since first image index already used
+                
+                
                 self.postsTableView.reloadData()
+                
+                self.likesRankIndexPath.row = self.likesRankIndexPathsRows[0] as! Int   //set next row as next row in array
+                self.likesRankIndexPath.section = 0
+                self.postsTableView.scrollToRow(at: self.likesRankIndexPath, at: UITableViewScrollPosition.top, animated: false)//go to first/ top liked post
+
+                
             }
         })
+        
     }
     
     // MARK: - Table view data source
@@ -103,8 +150,11 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         // Configure the cell...
         let post = self.posts[indexPath.row] as! [String: AnyObject]  //indexPath.row is the post number?-
-        cell.titleLabel.text = post["title"] as? String
+        cell.titleLabel.text = post["likes"] as? String
         cell.contentTextView.text = post["content"] as? String
+        
+        
+        
         
         if let imageName = post["image"] as? String{
             let imageRef = FIRStorage.storage().reference().child("images/\(imageName)")
@@ -296,30 +346,30 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         if(touchDown){  //make sure there was a drag
             touchDown = false
             if(selectionLikeHighlighted){     //like image selected
-                //print("Like image")
-                
-                if let touch = touches.first{
-                    let touchPoint = touch.location(in: self.postsTableView)
-                    var indexPath1 =  self.postsTableView.indexPathForRow(at: touchPoint) //get cell index for current picture
+                let numberOfRows = self.postsTableView.numberOfRows(inSection: 0)   //get number oftotal rows
+                if(numberOfRows > likesRankRow){                    //chek if last image in column
+                    self.likesRankIndexPath.row = self.likesRankIndexPathsRows[likesRankRow] as! Int   //set next row as next row in array
+                    self.likesRankIndexPath.section = 0
+                    self.likesRankRow = self.likesRankRow + 1           //increment array location counter
                     
-                    let post = self.posts[(indexPath1?.row)!] as! [String: AnyObject]  //get likes int from firebase
-                    var a = post["likes"] as? Int
-                    a = a!+1
-                    let ref = post["postID"] as! String
-                    //let stringSize = (refFullString?.characters.count)!
-                    //let index = refFullString?.index((refFullString?.endIndex)!, offsetBy: 20)
-                   // let refShortString = refFullString?.substring(from: index!)
-                    //print(ref)
-                    FIRDatabase.database().reference().child("posts").child(ref).child("likes").setValue(a)
+                    self.postsTableView.scrollToRow(at: likesRankIndexPath, at: UITableViewScrollPosition.top, animated: false)//go to next top liked post
                     
-                    
-                    let numberOfRows = self.postsTableView.numberOfRows(inSection: 0) - 1
-                    if(numberOfRows > (indexPath1?.row)!){                    //chek if last image in column
-                        indexPath1?.row = (indexPath1?.row)! + 1
-                        self.postsTableView.scrollToRow(at: indexPath1!, at: UITableViewScrollPosition.top, animated: true)//go to next post
-                        // self.postsTableView.reloadData() //refresh
-                    }
+                    likePost(likesRankIndexPath)
+                    print("Like image")
                 }
+                /* if let touch = touches.first{
+                 let touchPoint = touch.location(in: self.postsTableView)
+                 var indexPath1 =  self.postsTableView.indexPathForRow(at: touchPoint) //get cell index for current picture
+                 
+                 likePost(indexPath1!)
+                 
+                 let numberOfRows = self.postsTableView.numberOfRows(inSection: 0) - 1
+                 if(numberOfRows > (indexPath1?.row)!){                    //chek if last image in column
+                 indexPath1?.row = (indexPath1?.row)! + 1
+                 self.postsTableView.scrollToRow(at: indexPath1!, at: UITableViewScrollPosition.top, animated: true)//go to next post
+                 // self.postsTableView.reloadData() //refresh
+                 }
+                 }*/
             }
             if(selectionDislikeHighlighted){
                 print("Dislike image")
@@ -347,9 +397,13 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     
-    func likePost(_ post: String){
-        let ref = FIRDatabase.database().reference()
-        let keyToPost = ref.child("posts").childByAutoId().key
+    func likePost(_ indexPath1: IndexPath){
+        let post = self.posts[(indexPath1.row)] as! [String: AnyObject]  //get likes int from firebase
+        var a = post["likes"] as? Int
+        a = a!+1
+        let ref = post["postID"] as! String
+        
+        FIRDatabase.database().reference().child("posts").child(ref).child("likes").setValue(a)
         
     }
     func savePost(_ post: String){
