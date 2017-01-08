@@ -65,13 +65,16 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
                                         let ref = FIRDatabase.database().reference().child("posts").childByAutoId()
                                         let key = ref.key
                                         
+                                        let time = FIRServerValue.timestamp()
+                                        
                                         let postObject: Dictionary<String, Any> = [
                                             "uid" : uid,
                                             "title" : title,
                                             "content" : content,
                                             "username" : username,
                                             "image" : self.imageFileName,
-                                            "postID": key
+                                            "postID": key,
+                                            "time": time
                                         ]
                                         
                                         ref.setValue(postObject)

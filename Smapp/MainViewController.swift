@@ -105,14 +105,19 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                                 self.likesRankIndexPathsRows.exchangeObject(at: index, withObjectAt: (self.likesRankIndexPathsRows.count - 1))
                             }
                         }
-                        
                         print()
                         print(self.likesRank)
                         print(self.likesRankIndexPathsRows)
                         print()
                         
-                        
                     }                                                    /*       ^^          */
+                    
+                    if(FIRAuth.auth()?.currentUser?.uid == ("j1Bj5gGjH1eoJtP4CcgFbDJYxNt2")){  //only my account can do(for later deleting old posts)
+                        if let t = post1["time"] as? TimeInterval{                  /*   sort by time   */
+                            let time = NSDate(timeIntervalSince1970: t/1000)
+                                print("time of post: \(time)")
+                        }
+                    }
                     
                     
                     self.posts.add(post.value)       //fill table with posts from posts folder-
@@ -125,7 +130,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.likesRankIndexPath.row = self.likesRankIndexPathsRows[0] as! Int   //set next row as next row in array
                 self.likesRankIndexPath.section = 0
                 self.postsTableView.scrollToRow(at: self.likesRankIndexPath, at: UITableViewScrollPosition.top, animated: false)//go to first/ top liked post
-
+                
                 
             }
         })
@@ -150,12 +155,13 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         // Configure the cell...
         let post = self.posts[indexPath.row] as! [String: AnyObject]  //indexPath.row is the post number?-
-        cell.titleLabel.text = post["likes"] as? String
+        //cell.titleLabel.text = post["likes"] as? String
+        cell.titleLabel.text = "\(post["likes"] as! Int)"
         cell.contentTextView.text = post["content"] as? String
         
-        
-        
-        
+        cell.titleLabel.alpha = 0                   //slowly fade in post with animation
+        cell.contentTextView.alpha = 0
+        cell.postImageView.alpha = 0
         if let imageName = post["image"] as? String{
             let imageRef = FIRStorage.storage().reference().child("images/\(imageName)")
             imageRef.data(withMaxSize: 25 * 1024 * 1024, completion:{ (data, error) -> Void in  //max data size 25 mb
@@ -164,9 +170,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                     let image = UIImage(data: data!)
                     cell.postImageView.image = image
                     
-                    cell.titleLabel.alpha = 0                   //slowly fade in post with animation
-                    cell.contentTextView.alpha = 0
-                    cell.postImageView.alpha = 0
+                   
                     UIView.animate(withDuration: 0.4, animations: {
                         cell.titleLabel.alpha = 1
                         cell.contentTextView.alpha = 1
@@ -346,30 +350,10 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         if(touchDown){  //make sure there was a drag
             touchDown = false
             if(selectionLikeHighlighted){     //like image selected
-                let numberOfRows = self.postsTableView.numberOfRows(inSection: 0)   //get number oftotal rows
-                if(numberOfRows > likesRankRow){                    //chek if last image in column
-                    self.likesRankIndexPath.row = self.likesRankIndexPathsRows[likesRankRow] as! Int   //set next row as next row in array
-                    self.likesRankIndexPath.section = 0
-                    self.likesRankRow = self.likesRankRow + 1           //increment array location counter
-                    
-                    self.postsTableView.scrollToRow(at: likesRankIndexPath, at: UITableViewScrollPosition.top, animated: false)//go to next top liked post
-                    
-                    likePost(likesRankIndexPath)
-                    print("Like image")
-                }
-                /* if let touch = touches.first{
-                 let touchPoint = touch.location(in: self.postsTableView)
-                 var indexPath1 =  self.postsTableView.indexPathForRow(at: touchPoint) //get cell index for current picture
-                 
-                 likePost(indexPath1!)
-                 
-                 let numberOfRows = self.postsTableView.numberOfRows(inSection: 0) - 1
-                 if(numberOfRows > (indexPath1?.row)!){                    //chek if last image in column
-                 indexPath1?.row = (indexPath1?.row)! + 1
-                 self.postsTableView.scrollToRow(at: indexPath1!, at: UITableViewScrollPosition.top, animated: true)//go to next post
-                 // self.postsTableView.reloadData() //refresh
-                 }
-                 }*/
+                nextPost()
+                likePost(likesRankIndexPath)
+                print("Like image")
+                
             }
             if(selectionDislikeHighlighted){
                 print("Dislike image")
@@ -412,8 +396,18 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     func dislikePost(_ post: String){
         
     }
-    func nextPost(){
-        
+    func nextPost(){            //go to next post
+        let numberOfRows = self.postsTableView.numberOfRows(inSection: 0)   //get number oftotal rows
+        if(numberOfRows > likesRankRow){                    //chek if last image in column
+            self.likesRankIndexPath.row = self.likesRankIndexPathsRows[likesRankRow] as! Int   //set next row as next row in array
+            self.likesRankIndexPath.section = 0
+            self.likesRankRow = self.likesRankRow + 1           //increment array location counter
+            
+            self.postsTableView.scrollToRow(at: likesRankIndexPath, at: UITableViewScrollPosition.top, animated: false)//go to next top liked post
+        }else{
+            //no more posts to view
+            print("No more posts")
+        }
     }
     
     @IBAction func categoryMenuTapped(_ sender: Any) {                  //open category menu, dropdown look
