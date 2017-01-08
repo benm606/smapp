@@ -66,10 +66,11 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
                                             "title" : title,
                                             "content" : content,
                                             "username" : username,
-                                            "image" : self.imageFileName
+                                            "image" : self.imageFileName,
                                         ]
-                                        
-                                        FIRDatabase.database().reference().child("posts").childByAutoId().setValue(postObject)
+                                        let ref = FIRDatabase.database().reference().child("posts").childByAutoId()
+                                        ref.setValue(postObject)
+                                        ref.child("likes").setValue(0)  //create likes saved int, set likes to zero to start
                                         
                                         let alert = UIAlertController(title: "Success", message: "Post sent", preferredStyle: .alert)  // popup message to say posted
                                         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) in

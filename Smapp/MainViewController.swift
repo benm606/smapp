@@ -282,7 +282,18 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         if(touchDown){  //make sure there was a drag
             touchDown = false
             if(selectionLikeHighlighted){     //like image selected
-                print("Like image")
+                //print("Like image")
+                if let touch = touches.first{
+                    let touchPoint = touch.location(in: self.postsTableView)
+                    var indexPath1 =  self.postsTableView.indexPathForRow(at: touchPoint) //get cell index for current picture
+                    
+                    let numberOfRows = self.postsTableView.numberOfRows(inSection: 0) - 1
+                    if(numberOfRows > (indexPath1?.row)!){                    //chek if last image in column
+                        indexPath1?.row = (indexPath1?.row)! + 1
+                        self.postsTableView.scrollToRow(at: indexPath1!, at: UITableViewScrollPosition.top, animated: true)//go to next post
+                        // self.postsTableView.reloadData() //refresh
+                    }
+                }
             }
             if(selectionDislikeHighlighted){
                 print("Dislike image")
@@ -319,7 +330,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     func dislikePost(_ post: String){
         
     }
-    func skipPost(){
+    func nextPost(){
         
     }
     
