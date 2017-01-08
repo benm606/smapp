@@ -51,6 +51,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
         }
     }
     
+
     @IBAction func postTapped(_ sender: AnyObject) {     //post to firebase databse
         if(self.imageUploadedToFirebase){
             if let uid = FIRAuth.auth()?.currentUser?.uid{   ///make sure all fields r filled and create postable object
@@ -69,8 +70,13 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
                                             "image" : self.imageFileName,
                                         ]
                                         let ref = FIRDatabase.database().reference().child("posts").childByAutoId()
+                                        
                                         ref.setValue(postObject)
                                         ref.child("likes").setValue(0)  //create likes saved int, set likes to zero to start
+                                        let ref1 = "\(ref)"
+                                        ref.child("postID").setValue(ref1)
+                                        print(ref1)
+                                        
                                         
                                         let alert = UIAlertController(title: "Success", message: "Post sent", preferredStyle: .alert)  // popup message to say posted
                                         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) in
@@ -94,6 +100,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
         }
         
     }
+    
     
     @IBAction func selectImageTapped(_ sender: Any) {
         let picker = UIImagePickerController()

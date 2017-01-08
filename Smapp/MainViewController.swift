@@ -30,6 +30,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     var selectionDislikeHighlighted = false
     var selectionShareHighlighted = false
     var selectionSaveHighlighted = false
+    var postID: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,6 +92,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         let post = self.posts[indexPath.row] as! [String: AnyObject]  //indexPath.row is the post number?-
         cell.titleLabel.text = post["title"] as? String
         cell.contentTextView.text = post["content"] as? String
+        
         if let imageName = post["image"] as? String{
             let imageRef = FIRStorage.storage().reference().child("images/\(imageName)")
             imageRef.data(withMaxSize: 25 * 1024 * 1024, completion:{ (data, error) -> Void in  //max data size 25 mb
@@ -277,15 +279,26 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.touchesMoved(touches, with: event)
     }
     
-    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         if(touchDown){  //make sure there was a drag
             touchDown = false
             if(selectionLikeHighlighted){     //like image selected
                 //print("Like image")
+                
                 if let touch = touches.first{
                     let touchPoint = touch.location(in: self.postsTableView)
                     var indexPath1 =  self.postsTableView.indexPathForRow(at: touchPoint) //get cell index for current picture
+
+                    let post = self.posts[(indexPath1?.row)!] as! [String: AnyObject]  //get likes int from firebase
+                    var a = post["likes"] as? Int
+                    a = a!+1
+                    let refFullString = post["ref"] as? String
+                    //let stringSize = (refFullString?.characters.count)!
+                    let index = refFullString?.index((refFullString?.endIndex)!, offsetBy: 20)
+                    let refShortString = refFullString?.substring(from: index!)
+                    print("\(refShortString)")
+                    //ref?.child("likes").setValue(a)
+ 
                     
                     let numberOfRows = self.postsTableView.numberOfRows(inSection: 0) - 1
                     if(numberOfRows > (indexPath1?.row)!){                    //chek if last image in column
@@ -322,7 +335,8 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     func likePost(_ post: String){
-        
+        let ref = FIRDatabase.database().reference()
+        let keyToPost = ref.child("posts").childByAutoId().key
     }
     func savePost(_ post: String){
         
