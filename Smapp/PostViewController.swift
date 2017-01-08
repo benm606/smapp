@@ -62,20 +62,23 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
                             if let username = user.value as? String{
                                 if let title = self.titleTextField.text{
                                     if let content = self.contentTextView.text{
+                                        let ref = FIRDatabase.database().reference().child("posts").childByAutoId()
+                                        let key = ref.key
+                                        
                                         let postObject: Dictionary<String, Any> = [
                                             "uid" : uid,
                                             "title" : title,
                                             "content" : content,
                                             "username" : username,
                                             "image" : self.imageFileName,
+                                            "postID": key
                                         ]
-                                        let ref = FIRDatabase.database().reference().child("posts").childByAutoId()
                                         
                                         ref.setValue(postObject)
                                         ref.child("likes").setValue(0)  //create likes saved int, set likes to zero to start
-                                        let ref1 = "\(ref)"
-                                        ref.child("postID").setValue(ref1)
-                                        print(ref1)
+                                        //let ref1 = "\(ref)"
+                                        //ref.child("postID").setValue(ref1)
+                                        //print(ref1)
                                         
                                         
                                         let alert = UIAlertController(title: "Success", message: "Post sent", preferredStyle: .alert)  // popup message to say posted

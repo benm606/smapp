@@ -19,6 +19,11 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var selectionSaveImageView: UIImageView!
     @IBOutlet weak var selectionShareImageView: UIImageView!
     @IBOutlet weak var selectionCenterImageView: UIImageView!
+    @IBOutlet weak var popularCategoryButton: UIButton!
+    @IBOutlet weak var recentCategoryButton: UIButton!
+    @IBOutlet weak var categoryMenuButton: UIButton!
+    @IBOutlet weak var grayBackgroundCoat: UIImageView!
+    
     
     var posts = NSMutableArray()
     var touchPressedX = CGFloat()
@@ -31,6 +36,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     var selectionShareHighlighted = false
     var selectionSaveHighlighted = false
     var postID: String!
+    var categoryMenuOpen = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +49,13 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.selectionDislikeImageView.alpha = 0
         self.selectionSaveImageView.alpha = 0
         self.selectionShareImageView.alpha = 0
+        self.grayBackgroundCoat.alpha = 0
+        
+        //hide buttons
+        self.popularCategoryButton.frame.origin = CGPoint(x: self.popularCategoryButton.frame.origin.x, y: self.categoryMenuButton.frame.origin.y)
+        self.recentCategoryButton.frame.origin = CGPoint(x: self.recentCategoryButton.frame.origin.x, y: self.categoryMenuButton.frame.origin.y)
+        self.popularCategoryButton.alpha = 0
+        self.recentCategoryButton.alpha = 0
         
         self.navigationController?.navigationBar.alpha = 0    //set top bar coloring
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
@@ -288,17 +301,17 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 if let touch = touches.first{
                     let touchPoint = touch.location(in: self.postsTableView)
                     var indexPath1 =  self.postsTableView.indexPathForRow(at: touchPoint) //get cell index for current picture
-
+                    
                     let post = self.posts[(indexPath1?.row)!] as! [String: AnyObject]  //get likes int from firebase
                     var a = post["likes"] as? Int
                     a = a!+1
-                    let refFullString = post["ref"] as? String
+                    let ref = post["postID"] as! String
                     //let stringSize = (refFullString?.characters.count)!
-                    let index = refFullString?.index((refFullString?.endIndex)!, offsetBy: 20)
-                    let refShortString = refFullString?.substring(from: index!)
-                    print("\(refShortString)")
-                    //ref?.child("likes").setValue(a)
- 
+                    //let index = refFullString?.index((refFullString?.endIndex)!, offsetBy: 20)
+                   // let refShortString = refFullString?.substring(from: index!)
+                    //print(ref)
+                    FIRDatabase.database().reference().child("posts").child(ref).child("likes").setValue(a)
+                    
                     
                     let numberOfRows = self.postsTableView.numberOfRows(inSection: 0) - 1
                     if(numberOfRows > (indexPath1?.row)!){                    //chek if last image in column
@@ -337,6 +350,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     func likePost(_ post: String){
         let ref = FIRDatabase.database().reference()
         let keyToPost = ref.child("posts").childByAutoId().key
+        
     }
     func savePost(_ post: String){
         
@@ -348,7 +362,56 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
+    @IBAction func categoryMenuTapped(_ sender: Any) {                  //open category menu, dropdown look
+        if(categoryMenuOpen){
+            categoryMenuOpen = false
+            UIView.animate(withDuration: 0.2, animations: {
+                self.popularCategoryButton.frame.origin = CGPoint(x: (self.categoryMenuButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+                self.recentCategoryButton.frame.origin = CGPoint(x: (self.categoryMenuButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+                
+                self.popularCategoryButton.alpha = 0
+                self.recentCategoryButton.alpha = 0
+                self.grayBackgroundCoat.alpha = 0
+            })
+            
+        }else{
+            categoryMenuOpen = true
+            UIView.animate(withDuration: 0.2, animations: {
+                self.popularCategoryButton.frame.origin = CGPoint(x: (self.categoryMenuButton.frame.origin.x ), y: (self.categoryMenuButton.frame.origin.y + self.popularCategoryButton.frame.height + 40))
+                self.recentCategoryButton.frame.origin = CGPoint(x: (self.categoryMenuButton.frame.origin.x ), y: (self.categoryMenuButton.frame.origin.y + self.popularCategoryButton.frame.height + self.recentCategoryButton.frame.height + 40))
+                
+                self.popularCategoryButton.alpha = 1
+                self.recentCategoryButton.alpha = 1
+                self.grayBackgroundCoat.alpha = 0.5
+            })
+        }
+    }
     
+    @IBAction func recentCategoryTapped(_ sender: Any) {                //recent selected as category
+        categoryMenuOpen = false
+        self.categoryMenuButton.setTitle("Recent", for: .normal)
+        UIView.animate(withDuration: 0.2, animations: {
+            self.popularCategoryButton.frame.origin = CGPoint(x: (self.categoryMenuButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.recentCategoryButton.frame.origin = CGPoint(x: (self.categoryMenuButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            
+            self.popularCategoryButton.alpha = 0
+            self.recentCategoryButton.alpha = 0
+            self.grayBackgroundCoat.alpha = 0
+        })
+    }
+    
+    @IBAction func popularCategoryTapped(_ sender: Any) {                   //popular selected as category
+        categoryMenuOpen = false
+        self.categoryMenuButton.setTitle("Popular", for: .normal)
+        UIView.animate(withDuration: 0.2, animations: {
+            self.popularCategoryButton.frame.origin = CGPoint(x: (self.categoryMenuButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.recentCategoryButton.frame.origin = CGPoint(x: (self.categoryMenuButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            
+            self.popularCategoryButton.alpha = 0
+            self.recentCategoryButton.alpha = 0
+            self.grayBackgroundCoat.alpha = 0
+        })
+    }
     
     
     /*

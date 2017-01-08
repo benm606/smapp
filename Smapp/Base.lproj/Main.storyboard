@@ -278,7 +278,7 @@
             </objects>
             <point key="canvasLocation" x="1813.5999999999999" y="138.98050974512745"/>
         </scene>
-        <!--Smapp-->
+        <!--Main View Controller-->
         <scene sceneID="5rE-za-RC7">
             <objects>
                 <viewController automaticallyAdjustsScrollViewInsets="NO" id="REf-Gb-WUJ" customClass="MainViewController" customModule="Smapp" customModuleProvider="target" sceneMemberID="viewController">
@@ -298,7 +298,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="564"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="J6e-Zm-0tx" id="goR-45-s4o">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="564"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="563"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="This is the title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3AE-Rj-dYw">
@@ -372,6 +372,33 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0" green="1" blue="0.033423053469999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fRX-8S-Red" userLabel="LightGrayCoat">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SxY-vT-toi">
+                                <rect key="frame" x="129" y="64" width="117" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="18"/>
+                                <state key="normal" title="Recent">
+                                    <color key="titleColor" red="0.01212018055" green="0.13415541459999999" blue="0.32793288929999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="recentCategoryTapped:" destination="REf-Gb-WUJ" eventType="touchUpInside" id="QJm-VT-dDU"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kZ7-Y0-n2C">
+                                <rect key="frame" x="129" y="64" width="117" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="18"/>
+                                <state key="normal" title="Popular">
+                                    <color key="titleColor" red="0.01212018055" green="0.13415541459999999" blue="0.32793288929999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="popularCategoryTapped:" destination="REf-Gb-WUJ" eventType="touchUpInside" id="fr4-4I-KlQ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -382,21 +409,39 @@
                             <constraint firstItem="kBm-KQ-6Rw" firstAttribute="top" secondItem="ivd-1h-qmc" secondAttribute="bottom" constant="8" id="zkc-VX-TKa"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Smapp" id="8wb-wC-Jer">
+                    <navigationItem key="navigationItem" id="8wb-wC-Jer">
+                        <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="XMi-uN-PzP">
+                            <color key="tintColor" red="0.01212018055" green="0.13415541459999999" blue="0.32793288929999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="logOutTapped:" destination="REf-Gb-WUJ" id="B1r-sp-mCI"/>
                             </connections>
                         </barButtonItem>
+                        <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="JoI-fJ-1Sr">
+                            <rect key="frame" x="113" y="7" width="150" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="18"/>
+                            <state key="normal" title="Popular">
+                                <color key="titleColor" red="0.012120180552269266" green="0.13415541457107813" blue="0.32793288934426235" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="categoryMenuTapped:" destination="REf-Gb-WUJ" eventType="touchUpInside" id="diD-za-qOp"/>
+                            </connections>
+                        </button>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="UWl-Nu-Y6G">
+                            <color key="tintColor" red="0.01212018055" green="0.13415541459999999" blue="0.32793288929999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <segue destination="JI8-uM-qUt" kind="show" animates="NO" id="AXf-Eg-BuY"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="categoryMenuButton" destination="JoI-fJ-1Sr" id="KjR-hS-HK6"/>
                         <outlet property="fullPostView" destination="srz-6e-pU9" id="BIf-lt-wwM"/>
+                        <outlet property="grayBackgroundCoat" destination="fRX-8S-Red" id="cgA-pb-SEp"/>
+                        <outlet property="popularCategoryButton" destination="kZ7-Y0-n2C" id="MwH-wl-IGc"/>
                         <outlet property="postsTableView" destination="kBm-KQ-6Rw" id="4gD-01-bQV"/>
+                        <outlet property="recentCategoryButton" destination="SxY-vT-toi" id="jXl-Al-5RF"/>
                         <outlet property="selectionCenterImageView" destination="eVH-qm-MIh" id="LDj-Bi-bk6"/>
                         <outlet property="selectionDislikeImageView" destination="Bld-1a-tIX" id="vmM-T1-UcT"/>
                         <outlet property="selectionLikeImageView" destination="OI8-Ax-vFO" id="kZF-Uo-Jhd"/>
