@@ -41,7 +41,12 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     var likesRankIndexPathsRows = NSMutableArray()
     var likesRankRow = Int()
     var likesRankIndexPath = IndexPath()
-    
+    var sortByLikes = true
+    var sortByTime = false
+    var recentRank = NSMutableArray()
+    var recentRankIndexPathsRows = NSMutableArray()
+    var recentRankRow = Int()
+    var recentRankIndexPath = IndexPath()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,6 +64,8 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         self.likesRankIndexPath = IndexPath(row: 0, section: 0)
         self.likesRankRow = 0
+        self.recentRankIndexPath = IndexPath(row: 0, section: 0)
+        self.recentRankRow = 0
         
         //hide buttons
         self.popularCategoryButton.frame.origin = CGPoint(x: self.popularCategoryButton.frame.origin.x, y: self.categoryMenuButton.frame.origin.y)
@@ -92,7 +99,9 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                     
                     let post1 = post.value as! [String: AnyObject]  //indexPath.row is the post number?-
                     
-                    let currentPostLikes = post1["likes"] as! Int       /*    sort by likes   */
+                    /*                  sort by likes                         */
+                    
+                    let currentPostLikes = post1["likes"] as! Int
                     self.likesRank.add(currentPostLikes)
                     self.likesRankIndexPathsRows.add(self.likesRankRow)
                     self.likesRankRow = self.likesRankRow + 1
@@ -110,18 +119,44 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                         print(self.likesRankIndexPathsRows)
                         print()
                         
-                    }                                                    /*       ^^          */
-                    
-                    if(FIRAuth.auth()?.currentUser?.uid == ("j1Bj5gGjH1eoJtP4CcgFbDJYxNt2")){  //only my account can do(for later deleting old posts)
-                        if let t = post1["time"] as? TimeInterval{                  /*   sort by time   */
-                            let time = NSDate(timeIntervalSince1970: t/1000)
-                                print("time of post: \(time)")
-                        }
                     }
+                    /*          ^^             ^^     */
                     
+                    /*              sort by time               */
+                    
+                    // if(FIRAuth.auth()?.currentUser?.uid == ("j1Bj5gGjH1eoJtP4CcgFbDJYxNt2")){  //only my account can do(for later deleting old posts)
+                    if let t = post1["time"] as? TimeInterval{
+                        let time = Date(timeIntervalSince1970: t/1000)
+                        
+                        self.recentRank.add(time)
+                        self.recentRankIndexPathsRows.add(self.recentRankRow)
+                        self.recentRankRow = self.recentRankRow + 1
+                        
+                        
+                        if(self.recentRank.count > 1){
+                            for (index, element) in self.recentRank.enumerated() {
+                                let date1 = self.recentRank[(self.recentRank.count - 1)] as! Date
+                                let date2 = element as! Date
+                                if(date1.compare(date2 as Date) == ComparisonResult.orderedDescending){
+                                    self.recentRank.exchangeObject(at: index, withObjectAt: (self.recentRank.count - 1))
+                                    self.recentRankIndexPathsRows.exchangeObject(at: index, withObjectAt: (self.recentRankIndexPathsRows.count - 1))
+                                }
+                            }
+                            print()
+                            print(self.recentRank)
+                            print(self.recentRankIndexPathsRows)
+                            print()
+                            
+                        }
+                        
+                    }
+                    //  }
+                    
+                    /*       ^^             ^^              */
                     
                     self.posts.add(post.value)       //fill table with posts from posts folder-
                 }
+                
                 self.likesRankRow = 1    //set as second index value since first image index already used
                 
                 
@@ -170,7 +205,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                     let image = UIImage(data: data!)
                     cell.postImageView.image = image
                     
-                   
+                    
                     UIView.animate(withDuration: 0.4, animations: {
                         cell.titleLabel.alpha = 1
                         cell.contentTextView.alpha = 1
@@ -398,15 +433,29 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     func nextPost(){            //go to next post
         let numberOfRows = self.postsTableView.numberOfRows(inSection: 0)   //get number oftotal rows
-        if(numberOfRows > likesRankRow){                    //chek if last image in column
-            self.likesRankIndexPath.row = self.likesRankIndexPathsRows[likesRankRow] as! Int   //set next row as next row in array
-            self.likesRankIndexPath.section = 0
-            self.likesRankRow = self.likesRankRow + 1           //increment array location counter
-            
-            self.postsTableView.scrollToRow(at: likesRankIndexPath, at: UITableViewScrollPosition.top, animated: false)//go to next top liked post
-        }else{
-            //no more posts to view
-            print("No more posts")
+        if(sortByLikes){
+            if(numberOfRows > likesRankRow){                    //chek if last image in column
+                self.likesRankIndexPath.row = self.likesRankIndexPathsRows[likesRankRow] as! Int   //set next row as next row in array
+                self.likesRankIndexPath.section = 0
+                self.likesRankRow = self.likesRankRow + 1           //increment array location counter
+                
+                self.postsTableView.scrollToRow(at: likesRankIndexPath, at: UITableViewScrollPosition.top, animated: false)//go to next top liked post
+            }else{
+                //no more posts to view
+                print("No more posts")
+            }
+        }else if(sortByTime){
+                if(numberOfRows > recentRankRow){                    //chek if last image in column
+                    
+                    self.recentRankIndexPath.row = self.recentRankIndexPathsRows[recentRankRow] as! Int   //set next row as next row in array
+                    self.recentRankIndexPath.section = 0
+                    self.recentRankRow = self.recentRankRow + 1           //increment array location counter
+                    
+                    self.postsTableView.scrollToRow(at: recentRankIndexPath, at: UITableViewScrollPosition.top, animated: false)//go to next tmost recent post
+                }else{
+                    //no more posts to view
+                    print("No more posts")
+            }
         }
     }
     
@@ -437,6 +486,10 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func recentCategoryTapped(_ sender: Any) {                //recent selected as category
         categoryMenuOpen = false
+        sortByTime = true
+        sortByLikes = false
+        recentRankRow = 0
+        nextPost()
         self.categoryMenuButton.setTitle("Recent", for: .normal)
         UIView.animate(withDuration: 0.2, animations: {
             self.popularCategoryButton.frame.origin = CGPoint(x: (self.categoryMenuButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
@@ -450,6 +503,10 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func popularCategoryTapped(_ sender: Any) {                   //popular selected as category
         categoryMenuOpen = false
+        sortByLikes = true
+        sortByTime = false
+        likesRankRow = 0
+        nextPost()
         self.categoryMenuButton.setTitle("Popular", for: .normal)
         UIView.animate(withDuration: 0.2, animations: {
             self.popularCategoryButton.frame.origin = CGPoint(x: (self.categoryMenuButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
