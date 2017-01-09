@@ -206,7 +206,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                     cell.postImageView.image = image
                     
                     
-                    UIView.animate(withDuration: 0.4, animations: {
+                    UIView.animate(withDuration: 0.2, animations: {
                         cell.titleLabel.alpha = 1
                         cell.contentTextView.alpha = 1
                         cell.postImageView.alpha = 1
@@ -422,7 +422,26 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         a = a!+1
         let ref = post["postID"] as! String
         
+    //let object = ["likedPostsID" : ref]
+        //let updatelikes : [String: Any]
+ 
+        //let a1 = FIRAuth.auth()?.currentUser?.uid as? String
+        //let object : [String : Any] = ["userWhoLikedID" : a1]
+        
         FIRDatabase.database().reference().child("posts").child(ref).child("likes").setValue(a)
+       
+        /////////////in progress, one like only
+        /*
+        FIRDatabase.database().reference().child("posts").child(ref).child("userWhoLikedID").child("\(FIRAuth.auth()?.currentUser?.uid)")
+        
+        let query = FIRDatabase.database().reference().child("posts").child(ref).queryEqual(toValue: "\(FIRAuth.auth()?.currentUser?.uid)", childKey: "userWhoLikedID")
+        print(query)
+        //setValue(object)
+        */
+        //FIRDatabase.database().reference().child("users").child((FIRAuth.auth()?.currentUser?.uid)!).child("likedPosts").setValue(object)
+        
+        ///////////////////
+        
         
     }
     func savePost(_ post: String){
