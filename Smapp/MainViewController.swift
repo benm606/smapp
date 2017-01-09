@@ -482,8 +482,8 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         if(categoryMenuOpen){
             categoryMenuOpen = false
             UIView.animate(withDuration: 0.2, animations: {
-                self.popularCategoryButton.frame.origin = CGPoint(x: (self.categoryMenuButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
-                self.recentCategoryButton.frame.origin = CGPoint(x: (self.categoryMenuButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+                self.popularCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+                self.recentCategoryButton.frame.origin = CGPoint(x: (self.recentCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
                 
                 self.popularCategoryButton.alpha = 0
                 self.recentCategoryButton.alpha = 0
@@ -493,8 +493,8 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         }else{
             categoryMenuOpen = true
             UIView.animate(withDuration: 0.2, animations: {
-                self.popularCategoryButton.frame.origin = CGPoint(x: (self.categoryMenuButton.frame.origin.x ), y: (self.categoryMenuButton.frame.origin.y + self.popularCategoryButton.frame.height + 40))
-                self.recentCategoryButton.frame.origin = CGPoint(x: (self.categoryMenuButton.frame.origin.x ), y: (self.categoryMenuButton.frame.origin.y + self.popularCategoryButton.frame.height + self.recentCategoryButton.frame.height + 40))
+                self.popularCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: (self.categoryMenuButton.frame.origin.y + self.popularCategoryButton.frame.height + 30))
+                self.recentCategoryButton.frame.origin = CGPoint(x: (self.recentCategoryButton.frame.origin.x ), y: (self.categoryMenuButton.frame.origin.y + self.popularCategoryButton.frame.height + self.recentCategoryButton.frame.height + 32))
                 
                 self.popularCategoryButton.alpha = 1
                 self.recentCategoryButton.alpha = 1
@@ -511,8 +511,8 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         nextPost()
         self.categoryMenuButton.setTitle("Recent", for: .normal)
         UIView.animate(withDuration: 0.2, animations: {
-            self.popularCategoryButton.frame.origin = CGPoint(x: (self.categoryMenuButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
-            self.recentCategoryButton.frame.origin = CGPoint(x: (self.categoryMenuButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.popularCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.recentCategoryButton.frame.origin = CGPoint(x: (self.recentCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             
             self.popularCategoryButton.alpha = 0
             self.recentCategoryButton.alpha = 0
@@ -528,8 +528,8 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         nextPost()
         self.categoryMenuButton.setTitle("Popular", for: .normal)
         UIView.animate(withDuration: 0.2, animations: {
-            self.popularCategoryButton.frame.origin = CGPoint(x: (self.categoryMenuButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
-            self.recentCategoryButton.frame.origin = CGPoint(x: (self.categoryMenuButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.popularCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.recentCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             
             self.popularCategoryButton.alpha = 0
             self.recentCategoryButton.alpha = 0
