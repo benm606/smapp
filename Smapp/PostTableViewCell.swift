@@ -9,15 +9,17 @@
 import UIKit
 
 class PostTableViewCell: UITableViewCell {
-    @IBOutlet weak var titleLabel: UILabel!
+    
+    @IBOutlet weak var likeCountLabel: UILabel!
     @IBOutlet weak var postImageView: UIImageView!
     @IBOutlet weak var contentTextView: UITextView!
-
+    @IBOutlet weak var usernameLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        self.titleLabel.alpha = 0
+        self.likeCountLabel.alpha = 0
+        self.usernameLabel.alpha = 0
         self.contentTextView.alpha = 0
         self.postImageView.alpha = 0
     }

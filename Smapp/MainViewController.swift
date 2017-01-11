@@ -15,15 +15,16 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var postsTableView: UITableView!
     @IBOutlet var fullPostView: UIView!
     @IBOutlet weak var selectionLikeImageView: UIImageView!
-    @IBOutlet weak var selectionDislikeImageView: UIImageView!
-    @IBOutlet weak var selectionSaveImageView: UIImageView!
-    @IBOutlet weak var selectionShareImageView: UIImageView!
+    
     @IBOutlet weak var selectionCenterImageView: UIImageView!
     @IBOutlet weak var popularCategoryButton: UIButton!
     @IBOutlet weak var recentCategoryButton: UIButton!
     @IBOutlet weak var categoryMenuButton: UIButton!
     @IBOutlet weak var grayBackgroundCoat: UIImageView!
     
+    @IBOutlet weak var selectionNextImageView: UIImageView!
+    @IBOutlet weak var selectionBackImageView: UIImageView!
+    @IBOutlet weak var selectionSaveImageView: UIImageView!
     
     var posts = NSMutableArray()
     var touchPressedX = CGFloat()
@@ -32,9 +33,9 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     var touchReleasedY = CGFloat()
     var touchDown = false
     var selectionLikeHighlighted = false
-    var selectionDislikeHighlighted = false
-    var selectionShareHighlighted = false
     var selectionSaveHighlighted = false
+    var selectionBackHighlighted = false
+    var selectionNextHighlighted = false
     var postID: String!
     var categoryMenuOpen = false
     var likesRank = NSMutableArray()
@@ -57,9 +58,9 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         self.selectionCenterImageView.alpha = 0
         self.selectionLikeImageView.alpha = 0
-        self.selectionDislikeImageView.alpha = 0
         self.selectionSaveImageView.alpha = 0
-        self.selectionShareImageView.alpha = 0
+        self.selectionNextImageView.alpha = 0
+        self.selectionBackImageView.alpha = 0
         self.grayBackgroundCoat.alpha = 0
         
         self.likesRankIndexPath = IndexPath(row: 0, section: 0)
@@ -68,13 +69,16 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.recentRankRow = 0
         
         //hide buttons
-        self.popularCategoryButton.frame.origin = CGPoint(x: self.popularCategoryButton.frame.origin.x, y: self.categoryMenuButton.frame.origin.y)
-        self.recentCategoryButton.frame.origin = CGPoint(x: self.recentCategoryButton.frame.origin.x, y: self.categoryMenuButton.frame.origin.y)
+        self.popularCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+        self.recentCategoryButton.frame.origin = CGPoint(x: (self.recentCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
         self.popularCategoryButton.alpha = 0
         self.recentCategoryButton.alpha = 0
         
         self.navigationController?.navigationBar.alpha = 0    //set top bar coloring
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
+        
+        self.popularCategoryButton.backgroundColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
+        self.recentCategoryButton.backgroundColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
         
         loadData()
         
@@ -114,10 +118,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                                 self.likesRankIndexPathsRows.exchangeObject(at: index, withObjectAt: (self.likesRankIndexPathsRows.count - 1))
                             }
                         }
-                        print()
-                        print(self.likesRank)
-                        print(self.likesRankIndexPathsRows)
-                        print()
                         
                     }
                     /*          ^^             ^^     */
@@ -142,10 +142,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                                     self.recentRankIndexPathsRows.exchangeObject(at: index, withObjectAt: (self.recentRankIndexPathsRows.count - 1))
                                 }
                             }
-                            print()
-                            print(self.recentRank)
-                            print(self.recentRankIndexPathsRows)
-                            print()
                             
                         }
                         
@@ -154,10 +150,13 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                     
                     /*       ^^             ^^              */
                     
+                    /*              sort by category               */
+
+                    
                     self.posts.add(post.value)       //fill table with posts from posts folder-
                 }
                 
-                self.likesRankRow = 1    //set as second index value since first image index already used
+                self.likesRankRow = 0    //set as second index value since first image index already used
                 
                 
                 self.postsTableView.reloadData()
@@ -190,11 +189,13 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         // Configure the cell...
         let post = self.posts[indexPath.row] as! [String: AnyObject]  //indexPath.row is the post number?-
-        //cell.titleLabel.text = post["likes"] as? String
-        cell.titleLabel.text = "\(post["likes"] as! Int)"
+        //cell.likeCountLabel.text = post["likes"] as? String
+        cell.likeCountLabel.text = "\(post["likes"] as! Int)"
         cell.contentTextView.text = post["content"] as? String
+        cell.usernameLabel.text = post["username"] as? String
         
-        cell.titleLabel.alpha = 0                   //slowly fade in post with animation
+        cell.likeCountLabel.alpha = 0                   //slowly fade in post with animation
+        cell.usernameLabel.alpha = 0
         cell.contentTextView.alpha = 0
         cell.postImageView.alpha = 0
         if let imageName = post["image"] as? String{
@@ -207,7 +208,8 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                     
                     
                     UIView.animate(withDuration: 0.2, animations: {
-                        cell.titleLabel.alpha = 1
+                        cell.likeCountLabel.alpha = 1
+                        cell.usernameLabel.alpha = 1
                         cell.contentTextView.alpha = 1
                         cell.postImageView.alpha = 1
                     })
@@ -248,16 +250,16 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             let touchPoint = touch.location(in: self.selectionCenterImageView)
             if(self.selectionCenterImageView.bounds.contains(touchPoint)){     //if center of wheel touced
                 UIView.animate(withDuration: 0.2, animations: {     //highlight selection wheel spokes
-                    self.selectionCenterImageView.alpha = 0.7
-                    self.selectionLikeImageView.alpha = 0.4
-                    self.selectionDislikeImageView.alpha = 0.4
-                    self.selectionSaveImageView.alpha = 0.4
-                    self.selectionShareImageView.alpha = 0.4
+                    self.selectionCenterImageView.alpha = 0.8
+                    self.selectionLikeImageView.alpha = 0.6
+                    self.selectionSaveImageView.alpha = 0.6
+                    self.selectionNextImageView.alpha = 0.6
+                    self.selectionBackImageView.alpha = 0.6
                 })
                 selectionLikeHighlighted = false     //set which spoke highlighted for end action
-                selectionDislikeHighlighted = false
-                selectionShareHighlighted = false
                 selectionSaveHighlighted = false
+                selectionBackHighlighted = false
+                selectionNextHighlighted = false
             }
         }
         //if touches.first?.view == selectionCenterImageView
@@ -269,96 +271,96 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             var touchPoint = touch.location(in: self.selectionLikeImageView)
             if(self.selectionLikeImageView.bounds.contains(touchPoint)){
                 UIView.animate(withDuration: 0.1, animations: {     //highlight selection wheel spokes
-                    self.selectionCenterImageView.alpha = 0.4
-                    self.selectionLikeImageView.alpha = 0.7
-                    self.selectionDislikeImageView.alpha = 0.4
-                    self.selectionSaveImageView.alpha = 0.4
-                    self.selectionShareImageView.alpha = 0.4
+                    self.selectionCenterImageView.alpha = 0.6
+                    self.selectionLikeImageView.alpha = 0.8
+                    self.selectionSaveImageView.alpha = 0.6
+                    self.selectionNextImageView.alpha = 0.6
+                    self.selectionBackImageView.alpha = 0.6
                 })
                 selectionLikeHighlighted = true
-                selectionDislikeHighlighted = false
-                selectionShareHighlighted = false
                 selectionSaveHighlighted = false
-            }
-            touchPoint = touch.location(in: self.selectionDislikeImageView)
-            if(self.selectionDislikeImageView.bounds.contains(touchPoint)){
-                UIView.animate(withDuration: 0.1, animations: {     //highlight selection wheel spokes
-                    self.selectionCenterImageView.alpha = 0.4
-                    self.selectionLikeImageView.alpha = 0.4
-                    self.selectionDislikeImageView.alpha = 0.7
-                    self.selectionSaveImageView.alpha = 0.4
-                    self.selectionShareImageView.alpha = 0.4
-                })
-                selectionLikeHighlighted = false
-                selectionDislikeHighlighted = true
-                selectionShareHighlighted = false
-                selectionSaveHighlighted = false
-            }
-            touchPoint = touch.location(in: self.selectionShareImageView)
-            if(self.selectionShareImageView.bounds.contains(touchPoint)){
-                UIView.animate(withDuration: 0.1, animations: {     //highlight selection wheel spokes
-                    self.selectionCenterImageView.alpha = 0.4
-                    self.selectionLikeImageView.alpha = 0.4
-                    self.selectionDislikeImageView.alpha = 0.4
-                    self.selectionSaveImageView.alpha = 0.4
-                    self.selectionShareImageView.alpha = 0.7
-                })
-                selectionLikeHighlighted = false
-                selectionDislikeHighlighted = false
-                selectionShareHighlighted = true
-                selectionSaveHighlighted = false
+                selectionBackHighlighted = false
+                selectionNextHighlighted = false
             }
             touchPoint = touch.location(in: self.selectionSaveImageView)
             if(self.selectionSaveImageView.bounds.contains(touchPoint)){
                 UIView.animate(withDuration: 0.1, animations: {     //highlight selection wheel spokes
-                    self.selectionCenterImageView.alpha = 0.4
-                    self.selectionLikeImageView.alpha = 0.4
-                    self.selectionDislikeImageView.alpha = 0.4
-                    self.selectionSaveImageView.alpha = 0.7
-                    self.selectionShareImageView.alpha = 0.4
+                    self.selectionCenterImageView.alpha = 0.6
+                    self.selectionLikeImageView.alpha = 0.6
+                    self.selectionSaveImageView.alpha = 0.8
+                    self.selectionNextImageView.alpha = 0.6
+                    self.selectionBackImageView.alpha = 0.6
                 })
                 selectionLikeHighlighted = false
-                selectionDislikeHighlighted = false
-                selectionShareHighlighted = false
                 selectionSaveHighlighted = true
+                selectionBackHighlighted = false
+                selectionNextHighlighted = false
+            }
+            touchPoint = touch.location(in: self.selectionBackImageView)
+            if(self.selectionBackImageView.bounds.contains(touchPoint)){
+                UIView.animate(withDuration: 0.1, animations: {     //highlight selection wheel spokes
+                    self.selectionCenterImageView.alpha = 0.6
+                    self.selectionLikeImageView.alpha = 0.6
+                    self.selectionSaveImageView.alpha = 0.6
+                    self.selectionNextImageView.alpha = 0.6
+                    self.selectionBackImageView.alpha = 0.8
+                })
+                selectionLikeHighlighted = false
+                selectionSaveHighlighted = false
+                selectionBackHighlighted = true
+                selectionNextHighlighted = false
+            }
+            touchPoint = touch.location(in: self.selectionNextImageView)
+            if(self.selectionNextImageView.bounds.contains(touchPoint)){
+                UIView.animate(withDuration: 0.1, animations: {     //highlight selection wheel spokes
+                    self.selectionCenterImageView.alpha = 0.6
+                    self.selectionLikeImageView.alpha = 0.6
+                    self.selectionSaveImageView.alpha = 0.6
+                    self.selectionNextImageView.alpha = 0.8
+                    self.selectionBackImageView.alpha = 0.6
+                })
+                selectionLikeHighlighted = false
+                selectionSaveHighlighted = false
+                selectionBackHighlighted = false
+                selectionNextHighlighted = true
             }
             touchPoint = touch.location(in: self.selectionCenterImageView)
             if(self.selectionCenterImageView.bounds.contains(touchPoint)){
                 UIView.animate(withDuration: 0.1, animations: {     //highlight selection wheel spokes
-                    self.selectionCenterImageView.alpha = 0.7
-                    self.selectionLikeImageView.alpha = 0.4
-                    self.selectionDislikeImageView.alpha = 0.4
-                    self.selectionSaveImageView.alpha = 0.4
-                    self.selectionShareImageView.alpha = 0.4
+                    self.selectionCenterImageView.alpha = 0.8
+                    self.selectionLikeImageView.alpha = 0.6
+                    self.selectionSaveImageView.alpha = 0.6
+                    self.selectionNextImageView.alpha = 0.6
+                    self.selectionBackImageView.alpha = 0.6
                 })
                 selectionLikeHighlighted = false
-                selectionDislikeHighlighted = false
-                selectionShareHighlighted = false
                 selectionSaveHighlighted = false
+                selectionBackHighlighted = false
+                selectionNextHighlighted = false
             }
             
             touchPoint = touch.location(in: self.selectionLikeImageView)
             if(self.selectionLikeImageView.bounds.contains(touchPoint) == false){
-                touchPoint = touch.location(in: self.selectionDislikeImageView)
-                if(self.selectionDislikeImageView.bounds.contains(touchPoint) == false){
+                touchPoint = touch.location(in: self.selectionSaveImageView)
+                if(self.selectionSaveImageView.bounds.contains(touchPoint) == false){
                     touchPoint = touch.location(in: self.selectionCenterImageView)
                     if(self.selectionCenterImageView.bounds.contains(touchPoint) == false){
-                        touchPoint = touch.location(in: self.selectionShareImageView)
-                        if(self.selectionShareImageView.bounds.contains(touchPoint) == false){
-                            touchPoint = touch.location(in: self.selectionSaveImageView)
-                            if(self.selectionSaveImageView.bounds.contains(touchPoint) == false){
+                        touchPoint = touch.location(in: self.selectionBackImageView)
+                        if(self.selectionBackImageView.bounds.contains(touchPoint) == false){
+                            touchPoint = touch.location(in: self.selectionNextImageView)
+                            if(self.selectionNextImageView.bounds.contains(touchPoint) == false){
                                 
                                 UIView.animate(withDuration: 0.2, animations: {     //unhighlight selection wheel spokes
-                                    self.selectionCenterImageView.alpha = 0.4
-                                    self.selectionLikeImageView.alpha = 0.4
-                                    self.selectionDislikeImageView.alpha = 0.4
-                                    self.selectionSaveImageView.alpha = 0.4
-                                    self.selectionShareImageView.alpha = 0.4
+                                    self.selectionCenterImageView.alpha = 0.6
+                                    self.selectionLikeImageView.alpha = 0.6
+                                    self.selectionSaveImageView.alpha = 0.6
+                                    self.selectionNextImageView.alpha = 0.6
+                                    self.selectionBackImageView.alpha = 0.6
                                 })
                                 selectionLikeHighlighted = false
-                                selectionDislikeHighlighted = false
-                                selectionShareHighlighted = false
                                 selectionSaveHighlighted = false
+                                selectionBackHighlighted = false
+                                selectionNextHighlighted = false
                             }
                         }
                         
@@ -385,19 +387,23 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         if(touchDown){  //make sure there was a drag
             touchDown = false
             if(selectionLikeHighlighted){     //like image selected
-                nextPost()
+                
                 likePost(likesRankIndexPath)
-                print("Like image")
+                nextPost()
+                //print("Like image")
                 
             }
-            if(selectionDislikeHighlighted){
-                print("Dislike image")
-            }
-            if(selectionShareHighlighted){
-                print("Share/Next image")
-            }
             if(selectionSaveHighlighted){
-                print("Save image")
+                // print("Save image")
+            }
+            if(selectionBackHighlighted){
+                goBackPost()
+                //print("Go Back an image")
+                
+            }
+            if(selectionNextHighlighted){
+                nextPost()
+                // print("Next image")
             }
             //let horizontalChange:CGFloat = touchReleasedX - touchPressedX   // x and y change of drag
             //let verticalChange: CGFloat = touchPressedY - touchReleasedY
@@ -408,9 +414,9 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         UIView.animate(withDuration: 0.2, animations: {     //hide selection wheel
             self.selectionCenterImageView.alpha = 0
             self.selectionLikeImageView.alpha = 0
-            self.selectionDislikeImageView.alpha = 0
             self.selectionSaveImageView.alpha = 0
-            self.selectionShareImageView.alpha = 0
+            self.selectionNextImageView.alpha = 0
+            self.selectionBackImageView.alpha = 0
         })
         super.touchesEnded(touches, with: event)
     }
@@ -418,27 +424,32 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func likePost(_ indexPath1: IndexPath){
         let post = self.posts[(indexPath1.row)] as! [String: AnyObject]  //get likes int from firebase
-        var a = post["likes"] as? Int
-        a = a!+1
         let ref = post["postID"] as! String
         
-    //let object = ["likedPostsID" : ref]
-        //let updatelikes : [String: Any]
- 
-        //let a1 = FIRAuth.auth()?.currentUser?.uid as? String
-        //let object : [String : Any] = ["userWhoLikedID" : a1]
         
-        FIRDatabase.database().reference().child("posts").child(ref).child("likes").setValue(a)
-       
+        let base = FIRDatabase.database().reference()
+        let uid = (FIRAuth.auth()?.currentUser?.uid)!
+        
+        
         /////////////in progress, one like only
-        /*
-        FIRDatabase.database().reference().child("posts").child(ref).child("userWhoLikedID").child("\(FIRAuth.auth()?.currentUser?.uid)")
         
-        let query = FIRDatabase.database().reference().child("posts").child(ref).queryEqual(toValue: "\(FIRAuth.auth()?.currentUser?.uid)", childKey: "userWhoLikedID")
-        print(query)
-        //setValue(object)
-        */
-        //FIRDatabase.database().reference().child("users").child((FIRAuth.auth()?.currentUser?.uid)!).child("likedPosts").setValue(object)
+        
+        let b = post["userWhoLikedID"] as? [String: Any]
+            if let c = b?["\(uid)"] as? String{
+                //user already liked post
+                
+            }else{
+                //user hasent liked post yet
+                var a = post["likes"] as? Int
+                a = a!+1
+                
+                base.child("posts").child(ref).child("likes").setValue(a)
+                base.child("posts").child(ref).child("userWhoLikedID").child("\(uid)").setValue("a")
+                
+            }
+        
+        
+        
         
         ///////////////////
         
@@ -447,16 +458,40 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     func savePost(_ post: String){
         
     }
-    func dislikePost(_ post: String){
-        
+    func goBackPost(){
+        if(sortByLikes){
+            if(0 < likesRankRow){                    //chek if first image in column
+                self.likesRankRow = self.likesRankRow - 1           //increment array location counter
+                
+                self.likesRankIndexPath.row = self.likesRankIndexPathsRows[likesRankRow] as! Int   //set next row as previous row in array
+                self.likesRankIndexPath.section = 0
+                
+                self.postsTableView.scrollToRow(at: likesRankIndexPath, at: UITableViewScrollPosition.top, animated: false)//go to next top liked post
+            }else{
+                //no more posts to go back to
+                print("No post before")
+            }
+        }else if(sortByTime){
+            if(0 < recentRankRow){                    //chek if first image in column
+                self.recentRankRow = self.recentRankRow - 1           //increment array location counter
+                
+                self.recentRankIndexPath.row = self.recentRankIndexPathsRows[recentRankRow] as! Int   //set next row as previous row in array
+                self.recentRankIndexPath.section = 0
+                
+                self.postsTableView.scrollToRow(at: recentRankIndexPath, at: UITableViewScrollPosition.top, animated: false)//go to next tmost recent post
+            }else{
+                //no more posts to go back to
+                print("No post before")
+            }
+        }
     }
     func nextPost(){            //go to next post
         let numberOfRows = self.postsTableView.numberOfRows(inSection: 0)   //get number oftotal rows
         if(sortByLikes){
-            if(numberOfRows > likesRankRow){                    //chek if last image in column
+            if(numberOfRows > likesRankRow + 1){                    //chek if last image in column
+                self.likesRankRow = self.likesRankRow + 1           //increment array location counter
                 self.likesRankIndexPath.row = self.likesRankIndexPathsRows[likesRankRow] as! Int   //set next row as next row in array
                 self.likesRankIndexPath.section = 0
-                self.likesRankRow = self.likesRankRow + 1           //increment array location counter
                 
                 self.postsTableView.scrollToRow(at: likesRankIndexPath, at: UITableViewScrollPosition.top, animated: false)//go to next top liked post
             }else{
@@ -464,22 +499,22 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 print("No more posts")
             }
         }else if(sortByTime){
-                if(numberOfRows > recentRankRow){                    //chek if last image in column
-                    
-                    self.recentRankIndexPath.row = self.recentRankIndexPathsRows[recentRankRow] as! Int   //set next row as next row in array
-                    self.recentRankIndexPath.section = 0
-                    self.recentRankRow = self.recentRankRow + 1           //increment array location counter
-                    
-                    self.postsTableView.scrollToRow(at: recentRankIndexPath, at: UITableViewScrollPosition.top, animated: false)//go to next tmost recent post
-                }else{
-                    //no more posts to view
-                    print("No more posts")
+            if(numberOfRows > recentRankRow + 1){                    //chek if last image in column
+                
+                self.recentRankRow = self.recentRankRow + 1           //increment array location counter
+                self.recentRankIndexPath.row = self.recentRankIndexPathsRows[recentRankRow] as! Int   //set next row as next row in array
+                self.recentRankIndexPath.section = 0
+                
+                self.postsTableView.scrollToRow(at: recentRankIndexPath, at: UITableViewScrollPosition.top, animated: false)//go to next tmost recent post
+            }else{
+                //no more posts to view
+                print("No more posts")
             }
         }
     }
     
     @IBAction func categoryMenuTapped(_ sender: Any) {                  //open category menu, dropdown look
-        if(categoryMenuOpen){
+        if(categoryMenuOpen){                           //category menu already open, so close it
             categoryMenuOpen = false
             UIView.animate(withDuration: 0.2, animations: {
                 self.popularCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
@@ -490,11 +525,11 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.grayBackgroundCoat.alpha = 0
             })
             
-        }else{
+        }else{                                          //category menu closed, so open it
             categoryMenuOpen = true
             UIView.animate(withDuration: 0.2, animations: {
-                self.popularCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: (self.categoryMenuButton.frame.origin.y + self.popularCategoryButton.frame.height + 30))
-                self.recentCategoryButton.frame.origin = CGPoint(x: (self.recentCategoryButton.frame.origin.x ), y: (self.categoryMenuButton.frame.origin.y + self.popularCategoryButton.frame.height + self.recentCategoryButton.frame.height + 32))
+                self.popularCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: (self.categoryMenuButton.frame.origin.y + self.popularCategoryButton.frame.height - 4))
+                self.recentCategoryButton.frame.origin = CGPoint(x: (self.recentCategoryButton.frame.origin.x ), y: (self.categoryMenuButton.frame.origin.y + self.popularCategoryButton.frame.height + self.recentCategoryButton.frame.height - 4))
                 
                 self.popularCategoryButton.alpha = 1
                 self.recentCategoryButton.alpha = 1
@@ -507,7 +542,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         categoryMenuOpen = false
         sortByTime = true
         sortByLikes = false
-        recentRankRow = 0
+        recentRankRow = -1
         nextPost()
         self.categoryMenuButton.setTitle("Recent", for: .normal)
         UIView.animate(withDuration: 0.2, animations: {
@@ -524,7 +559,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         categoryMenuOpen = false
         sortByLikes = true
         sortByTime = false
-        likesRankRow = 0
+        likesRankRow = -1
         nextPost()
         self.categoryMenuButton.setTitle("Popular", for: .normal)
         UIView.animate(withDuration: 0.2, animations: {
@@ -582,5 +617,35 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
      // Pass the selected object to the new view controller.
      }
      */
+    
+    
+    
+    /*    for tommorow
+    
+                    postimageview? alpha less when wheel shown so easier to see
+                    add category sort/side bar
+    
+        
+     
+     
+     to do
+        category sort
+        user score
+        side bar
+        save image
+        manage categories
+        first and last image screen
+        list of posts users already saw so they dont view again when reopening app?
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    */
     
 }

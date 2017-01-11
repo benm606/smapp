@@ -60,7 +60,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
                     if let userDictionary = snapshot.value as? [String: AnyObject]{
                         for user in userDictionary{
                             if let username = user.value as? String{
-                                if let title = self.titleTextField.text{
+                                if let category = self.titleTextField.text{
                                     if let content = self.contentTextView.text{
                                         let ref = FIRDatabase.database().reference().child("posts").childByAutoId()
                                         let key = ref.key
@@ -69,7 +69,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
                                         
                                         let postObject: Dictionary<String, Any> = [
                                             "uid" : uid,
-                                            "title" : title,
+                                            "category" : category,
                                             "content" : content,
                                             "username" : username,
                                             "image" : self.imageFileName,
@@ -79,6 +79,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
                                         
                                         ref.setValue(postObject)
                                         ref.child("likes").setValue(0)  //create likes saved int, set likes to zero to start
+                                        ref.child("userWhoLikedID").child("\(uid)").setValue("a")
                                         //let ref1 = "\(ref)"
                                         //ref.child("postID").setValue(ref1)
                                         //print(ref1)
