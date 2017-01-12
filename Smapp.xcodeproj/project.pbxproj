@@ -10,6 +10,7 @@
 		029035C022338343B08B0FF5 /* Pods_SmappTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B47BB52F436E357921D725D5 /* Pods_SmappTests.framework */; };
 		0F135CC760721A7431780797 /* Pods_Smapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D6B33BD6CBE610B2259B34E /* Pods_Smapp.framework */; };
 		6331B0C854509AE3AD016F4C /* Pods_SmappUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F76CBEB6194053CBF21A8794 /* Pods_SmappUITests.framework */; };
+		B52545021E26D022006A3EB5 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52545011E26D021006A3EB5 /* AccountViewController.swift */; };
 		B53B6D741E1F48730007F521 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53B6D731E1F48730007F521 /* PostViewController.swift */; };
 		B53B6D761E2017430007F521 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53B6D751E2017410007F521 /* PostTableViewCell.swift */; };
 		B53B6D781E201A140007F521 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53B6D771E201A140007F521 /* MainViewController.swift */; };
@@ -49,6 +50,7 @@
 		4FBAA4DD7FFE4320817D3F04 /* Pods-SmappUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SmappUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SmappUITests/Pods-SmappUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		876BCC59CBB2E7BFD858D980 /* Pods-Smapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Smapp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Smapp/Pods-Smapp.debug.xcconfig"; sourceTree = "<group>"; };
 		B47BB52F436E357921D725D5 /* Pods_SmappTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SmappTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B52545011E26D021006A3EB5 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		B53B6D731E1F48730007F521 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		B53B6D751E2017410007F521 /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		B53B6D771E201A140007F521 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 				B53B6D731E1F48730007F521 /* PostViewController.swift */,
 				B5E156AF1E1DF66800858C99 /* RegisterViewController.swift */,
 				B5E156831E1DDCE900858C99 /* Main.storyboard */,
+				B52545011E26D021006A3EB5 /* AccountViewController.swift */,
 				B53B6D771E201A140007F521 /* MainViewController.swift */,
 				B53B6D751E2017410007F521 /* PostTableViewCell.swift */,
 				B5E156861E1DDCE900858C99 /* Assets.xcassets */,
@@ -465,6 +468,7 @@
 			files = (
 				B53B6D741E1F48730007F521 /* PostViewController.swift in Sources */,
 				B5E156B01E1DF66800858C99 /* RegisterViewController.swift in Sources */,
+				B52545021E26D022006A3EB5 /* AccountViewController.swift in Sources */,
 				B53B6D761E2017430007F521 /* PostTableViewCell.swift in Sources */,
 				B53B6D781E201A140007F521 /* MainViewController.swift in Sources */,
 				B5E156821E1DDCE900858C99 /* ViewController.swift in Sources */,

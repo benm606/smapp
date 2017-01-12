@@ -47,12 +47,26 @@ class RegisterViewController: UIViewController {
                 if let uid = FIRAuth.auth()?.currentUser?.uid{
                     let userRef = FIRDatabase.database().reference().child("users").child(uid)
                     let object = ["username" : username]
-                    userRef.setValue(object)   //save username to userRef location-
+                    userRef.child("username").setValue(object)   //save username to userRef location-
+                    let object1 = ["score" : 0]
+                    userRef.child("score").setValue(object1)
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "MainVC")  //go to posts viewcontroller
-                    self.present(vc!, animated: true, completion: nil)            }
+                    self.present(vc!, animated: true, completion: nil)
+                    
+                    
+                    let catObject: Dictionary<String, Any> = [
+                        "cat1" : "",
+                        "cat2" : "",
+                        "cat3" : "",
+                        "cat4" : ""
+                        ]
+                    
+                    userRef.child("categories").setValue(catObject)
+                }
             }
             
         })
+        
         
     }
     

@@ -40,7 +40,6 @@ class ViewController: UIViewController{
         let username = usernameTextField.text
         let password = passwordTextField.text
         
-        
         FIRAuth.auth()?.signIn(withEmail: username!, password: password!, completion: { (user, error) in
             if error != nil {
                 //error logging in

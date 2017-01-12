@@ -54,12 +54,16 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
 
     @IBAction func postTapped(_ sender: AnyObject) {     //post to firebase databse
         if(self.imageUploadedToFirebase){
+            
+            //this is where code could be to enable button when post ready to be posted
+            
             if let uid = FIRAuth.auth()?.currentUser?.uid{   ///make sure all fields r filled and create postable object
                 
-                FIRDatabase.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: {(snapshot) in
-                    if let userDictionary = snapshot.value as? [String: AnyObject]{
-                        for user in userDictionary{
-                            if let username = user.value as? String{
+                FIRDatabase.database().reference().child("users").child(uid).child("username").observeSingleEvent(of: .value, with: {(snapshot) in
+                    
+                    
+                    if let user = snapshot.value as? [String: AnyObject]{
+                            let username = user["username"] as? String
                                 if let category = self.titleTextField.text{
                                     if let content = self.contentTextView.text{
                                         let ref = FIRDatabase.database().reference().child("posts").childByAutoId()
@@ -71,7 +75,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
                                             "uid" : uid,
                                             "category" : category,
                                             "content" : content,
-                                            "username" : username,
+                                            "username" : username!,
                                             "image" : self.imageFileName,
                                             "postID": key,
                                             "time": time
@@ -99,8 +103,8 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
                                 }
                             }
                             
-                        }
-                    }
+                    
+                    
                 })
                 
             }
@@ -117,7 +121,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
     
     func uploadImage(image: UIImage){                           //create random name to save photo under
         let randomName = randomStringWithLength(length: 10)
-        let imageData = UIImageJPEGRepresentation(image, 1.0)
+        let imageData = UIImageJPEGRepresentation(image, 0)
         let uploadRef = FIRStorage.storage().reference().child("images/\(randomName).jpg")
         
         let uploadTask = uploadRef.put(imageData!, metadata: nil){
