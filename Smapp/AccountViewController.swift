@@ -17,7 +17,7 @@ class AccountViewController: UIViewController {
     @IBOutlet weak var cat2TextField: UITextField!
     @IBOutlet weak var cat3TextField: UITextField!
     @IBOutlet weak var cat4TextField: UITextField!
-    @IBOutlet weak var saveButton: UIButton!
+    //@IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var logOutButton: UIButton!
     @IBOutlet weak var feedLabelButton: UIButton!
    
@@ -27,7 +27,7 @@ class AccountViewController: UIViewController {
         self.navigationController?.navigationBar.alpha = 0    //set top bar coloring
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
         
-        self.saveButton.backgroundColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
+        //self.saveButton.backgroundColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
         self.logOutButton.backgroundColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
         self.feedLabelButton.backgroundColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
         
@@ -68,6 +68,7 @@ class AccountViewController: UIViewController {
 
     
     @IBAction func logOutTapped(_ sender: Any) { //log out user
+        saveChanges()
         do{
             try FIRAuth.auth()?.signOut()
             //successfully logged out
@@ -78,7 +79,9 @@ class AccountViewController: UIViewController {
             print("Error logging out user.")
         }
     }
-    @IBAction func saveTapped(_ sender: Any) {
+
+    
+    func saveChanges() {
         if let uid = FIRAuth.auth()?.currentUser?.uid{   ///make sure all fields r filled and create postable object
             
             FIRDatabase.database().reference().child("users").child(uid).child("username").observeSingleEvent(of: .value, with: {(snapshot) in
@@ -97,7 +100,7 @@ class AccountViewController: UIViewController {
                                             "cat2" : cat2,
                                             "cat3" : cat3,
                                             "cat4" : cat4
-                                            ]
+                                        ]
                                         
                                         ref.setValue(postObject)
                                         print("saved updated values")
@@ -112,11 +115,18 @@ class AccountViewController: UIViewController {
         }
     }
     
+
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {   //when touched close keyboard
         view.endEditing(true)
+        saveChanges()
         super.touchesBegan(touches, with: event)
     }
     
+    @IBAction func backButtonTapped(_ sender: Any) {
+        saveChanges()
+        
+    }
     /*
      // MARK: - Navigation
      

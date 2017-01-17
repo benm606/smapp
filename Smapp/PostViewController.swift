@@ -17,6 +17,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
     @IBOutlet weak var contentTextView: UITextView!
     @IBOutlet weak var previewImageView: UIImageView!
     @IBOutlet weak var selectImageButton: UIButton!
+    @IBOutlet weak var postButton: UIButton!
     
     var imageFileName = ""
     var imageUploadedToFirebase = false    //used to make sure photo is uploaded fully before being posted
@@ -27,6 +28,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
         // Do any additional setup after loading the view.
         self.navigationController?.navigationBar.alpha = 0    //set top bar coloring
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
+        self.postButton.backgroundColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
         
     }
     
@@ -84,6 +86,8 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
                                         ref.setValue(postObject)
                                         ref.child("likes").setValue(0)  //create likes saved int, set likes to zero to start
                                         ref.child("userWhoLikedID").child("\(uid)").setValue("a")
+                                        ref.child("userWhoDisklikedID").child("\(uid)").setValue("a")
+                                        
                                         //let ref1 = "\(ref)"
                                         //ref.child("postID").setValue(ref1)
                                         //print(ref1)

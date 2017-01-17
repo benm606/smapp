@@ -90,8 +90,8 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.recentRankRow = 0
         
         //hide buttons
-        self.popularCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
-        self.recentCategoryButton.frame.origin = CGPoint(x: (self.recentCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+        self.popularCategoryButton.frame.origin = CGPoint(x: (self.categoryMenuButton.frame.origin.x + 10), y: self.categoryMenuButton.frame.origin.y)
+        self.recentCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
         self.cat1Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
         self.cat2Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
         self.cat3Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
@@ -113,6 +113,8 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.cat2Button.backgroundColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
         self.cat3Button.backgroundColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
         self.cat4Button.backgroundColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
+        
+        self.goBackToRow = 0
         
         //setup buttons
         
@@ -165,61 +167,90 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             if let postsDictionary = snapshot.value as? [String: AnyObject]{
                 for post in postsDictionary{
                     
+                    var skipPost = false
+                    
                     let post1 = post.value as! [String: AnyObject]  //indexPath.row is the post number?-
                     
-                    /*                  sort by likes                         */
+                    let t = post1["time"] as! TimeInterval              //this and next few lines, get date of post and current post
+                    let postTime = Date(timeIntervalSince1970: t/1000)
                     
-                    let currentPostLikes = post1["likes"] as! Int
-                    self.likesRank.add(currentPostLikes)
-                    self.likesRankIndexPathsRows.add(self.likesRankRow)
-                    self.likesRankRow = self.likesRankRow + 1
+                    let date = NSDate()
+                    let calendar = Calendar.current
                     
+                    let dayCurrent = calendar.component(.day, from: date as Date)
+                    let hourCurrent = calendar.component(.hour, from: date as Date)
+                    let minutesCurrent = calendar.component(.minute, from: date as Date)
+                    let timeCurrent = (dayCurrent * 1440) + (hourCurrent * 60) + (minutesCurrent)
                     
-                    if(self.likesRank.count > 1){
-                        for (index, element) in self.likesRank.enumerated() {
-                            if(self.likesRank[(self.likesRank.count - 1)] as! Int > element as! Int){
-                                self.likesRank.exchangeObject(at: index, withObjectAt: (self.likesRank.count - 1))
-                                self.likesRankIndexPathsRows.exchangeObject(at: index, withObjectAt: (self.likesRankIndexPathsRows.count - 1))
-                            }
-                        }
+                    let dayPost = calendar.component(.day, from: postTime as Date)
+                    let hourPost = calendar.component(.hour, from: postTime as Date)
+                    let minutesPost = calendar.component(.minute, from: postTime as Date)
+                    let timePost = (dayPost * 1440) + (hourPost * 60) + (minutesPost)
+                    
+                    if(timeCurrent - timePost > 1440){          //check if post is older than 24 hours(1440 mins)
+                        print("post old")           //delete post
+                    }else{
+                        let postID = post1["postID"] as! String
                         
+                        FIRDatabase.database().reference().child("posts").child(postID).removeValue()
+                        skipPost = true
+                        print("keep post")
                     }
-                    /*          ^^             ^^     */
                     
-                    /*              sort by time               */
                     
-                    // if(FIRAuth.auth()?.currentUser?.uid == ("j1Bj5gGjH1eoJtP4CcgFbDJYxNt2")){  //only my account can do(for later deleting old posts)
-                    if let t = post1["time"] as? TimeInterval{
-                        let time = Date(timeIntervalSince1970: t/1000)
+                    if(!skipPost){
+                        /*                  sort by likes                         */
                         
-                        self.recentRank.add(time)
-                        self.recentRankIndexPathsRows.add(self.recentRankRow)
-                        self.recentRankRow = self.recentRankRow + 1
+                        let currentPostLikes = post1["likes"] as! Int
+                        self.likesRank.add(currentPostLikes)
+                        self.likesRankIndexPathsRows.add(self.likesRankRow)
+                        self.likesRankRow = self.likesRankRow + 1
                         
                         
-                        if(self.recentRank.count > 1){
-                            for (index, element) in self.recentRank.enumerated() {
-                                let date1 = self.recentRank[(self.recentRank.count - 1)] as! Date
-                                let date2 = element as! Date
-                                if(date1.compare(date2 as Date) == ComparisonResult.orderedDescending){
-                                    self.recentRank.exchangeObject(at: index, withObjectAt: (self.recentRank.count - 1))
-                                    self.recentRankIndexPathsRows.exchangeObject(at: index, withObjectAt: (self.recentRankIndexPathsRows.count - 1))
+                        if(self.likesRank.count > 1){
+                            for (index, element) in self.likesRank.enumerated() {
+                                if(self.likesRank[(self.likesRank.count - 1)] as! Int > element as! Int){
+                                    self.likesRank.exchangeObject(at: index, withObjectAt: (self.likesRank.count - 1))
+                                    self.likesRankIndexPathsRows.exchangeObject(at: index, withObjectAt: (self.likesRankIndexPathsRows.count - 1))
                                 }
                             }
                             
                         }
+                        /*          ^^             ^^     */
                         
+                        /*              sort by time               */
+                        
+                        // if(FIRAuth.auth()?.currentUser?.uid == ("j1Bj5gGjH1eoJtP4CcgFbDJYxNt2")){  //only my account can do(for later deleting old posts)
+                        if let t = post1["time"] as? TimeInterval{
+                            let time = Date(timeIntervalSince1970: t/1000)
+                            
+                            self.recentRank.add(time)
+                            self.recentRankIndexPathsRows.add(self.recentRankRow)
+                            self.recentRankRow = self.recentRankRow + 1
+                            
+                            
+                            if(self.recentRank.count > 1){
+                                for (index, element) in self.recentRank.enumerated() {
+                                    let date1 = self.recentRank[(self.recentRank.count - 1)] as! Date
+                                    let date2 = element as! Date
+                                    if(date1.compare(date2 as Date) == ComparisonResult.orderedDescending){
+                                        self.recentRank.exchangeObject(at: index, withObjectAt: (self.recentRank.count - 1))
+                                        self.recentRankIndexPathsRows.exchangeObject(at: index, withObjectAt: (self.recentRankIndexPathsRows.count - 1))
+                                    }
+                                }
+                                
+                            }
+                            
+                        }
+                        //  }
+                        
+                        /*       ^^             ^^              */
+                        
+                        
+                        
+                        self.posts.add(post.value)       //fill table with posts from posts folder-
                     }
-                    //  }
-                    
-                    /*       ^^             ^^              */
-                    
-                    /*              sort by category               */
-                    
-                    
-                    self.posts.add(post.value)       //fill table with posts from posts folder-
                 }
-                
                 self.likesRankRow = 0    //set as second index value since first image index already used
                 
                 
@@ -228,9 +259,10 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.likesRankIndexPath.row = self.likesRankIndexPathsRows[0] as! Int   //set next row as next row in array
                 self.likesRankIndexPath.section = 0
                 self.postsTableView.scrollToRow(at: self.likesRankIndexPath, at: UITableViewScrollPosition.top, animated: false)//go to first/ top liked post
-                
-                
             }
+            
+            
+            
         })
         
         
@@ -302,6 +334,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                     self.selectionSaveImageView.alpha = 0.6
                     self.selectionNextImageView.alpha = 0.6
                     self.selectionBackImageView.alpha = 0.6
+                    self.grayBackgroundCoat.alpha = 0.5
                 })
                 selectionLikeHighlighted = false     //set which spoke highlighted for end action
                 selectionSaveHighlighted = false
@@ -442,6 +475,10 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 
             }
             if(selectionSaveHighlighted){
+                savePost(likesRankIndexPath)
+                stopSearching = false
+                nextPost()
+                
                 // print("Save image")
             }
             if(selectionBackHighlighted){
@@ -461,13 +498,35 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             //print(horizontalChange)
             //print(verticalChange)
         }
+        
         UIView.animate(withDuration: 0.2, animations: {     //hide selection wheel
             self.selectionCenterImageView.alpha = 0
             self.selectionLikeImageView.alpha = 0
             self.selectionSaveImageView.alpha = 0
             self.selectionNextImageView.alpha = 0
             self.selectionBackImageView.alpha = 0
+            self.grayBackgroundCoat.alpha = 0
+            
+            if(self.categoryMenuOpen){
+                self.categoryMenuOpen = false
+                self.popularCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+                self.recentCategoryButton.frame.origin = CGPoint(x: (self.recentCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+                self.cat1Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+                self.cat2Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+                self.cat3Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+                self.cat4Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+                
+                self.cat1Button.alpha = 0
+                self.cat2Button.alpha = 0
+                self.cat3Button.alpha = 0
+                self.cat4Button.alpha = 0
+                self.popularCategoryButton.alpha = 0
+                self.recentCategoryButton.alpha = 0
+                self.grayBackgroundCoat.alpha = 0
+            }
+            
         })
+        
         super.touchesEnded(touches, with: event)
     }
     
@@ -479,10 +538,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         let base = FIRDatabase.database().reference()
         let uid = (FIRAuth.auth()?.currentUser?.uid)!
         
-        
-        /////////////in progress, one like only
-        
-        
         let b = post["userWhoLikedID"] as? [String: Any]
         if let c = b?["\(uid)"] as? String{
             //user already liked post
@@ -490,7 +545,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         }else{
             //user hasent liked post yet
             var a = post["likes"] as? Int
-            a = a!+1
+            a = a! + 1
             base.child("posts").child(ref).child("likes").setValue(a)
             base.child("posts").child(ref).child("userWhoLikedID").child("\(uid)").setValue("a")
             
@@ -498,12 +553,26 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         
         
-        
-        ///////////////////
-        
-        
     }
-    func savePost(_ post: String){
+    func savePost(_ indexPath1: IndexPath){              //SAVE = Dislike
+        let post = self.posts[(indexPath1.row)] as! [String: AnyObject]  //get likes int from firebase
+        let ref = post["postID"] as! String
+        
+        let base = FIRDatabase.database().reference()
+        let uid = (FIRAuth.auth()?.currentUser?.uid)!
+        
+        let b = post["userWhoDislikedID"] as? [String: Any]
+        if let c = b?["\(uid)"] as? String{
+            //user already disliked post
+            
+        }else{
+            //user hasent disliked post yet
+            var a = post["likes"] as? Int
+            a = a! - 1
+            base.child("posts").child(ref).child("likes").setValue(a)
+            base.child("posts").child(ref).child("userWhoDislikedID").child("\(uid)").setValue("a")
+            
+        }
         
     }
     func goBackPost(){
@@ -538,7 +607,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }
         
-        let post = self.posts[likesRankRow] as! [String: AnyObject]  //get category from firebase
+        let post = self.posts[self.likesRankIndexPath.row] as! [String: AnyObject]  //get category from firebase
         let postCategory = post["category"] as! String
         
         if(sortByCat1){
@@ -582,18 +651,18 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let numberOfRows = self.postsTableView.numberOfRows(inSection: 0)   //get number oftotal rows
         if(sortByLikes){
-            if(numberOfRows > likesRankRow + 1){                    //chek if last image in column
+            if(numberOfRows > self.likesRankRow + 1){                    //chek if last image in column
                 self.likesRankRow = self.likesRankRow + 1           //increment array location counter
-                self.likesRankIndexPath.row = self.likesRankIndexPathsRows[likesRankRow] as! Int   //set next row as next row in array
+                self.likesRankIndexPath.row = self.likesRankIndexPathsRows[self.likesRankRow] as! Int   //set next row as next row in array
                 self.likesRankIndexPath.section = 0
                 
-                self.postsTableView.scrollToRow(at: likesRankIndexPath, at: UITableViewScrollPosition.top, animated: false)//go to next top liked post
+                self.postsTableView.scrollToRow(at: self.likesRankIndexPath, at: UITableViewScrollPosition.top, animated: false)//go to next top liked post
                 
             }else{
                 //no more posts to view
                 stopSearching = true
                 if(sortByCat1 || sortByCat2 || sortByCat3 || sortByCat4){
-                    likesRankRow = goBackToRow - 1
+                    self.likesRankRow = self.goBackToRow - 1
                     nextPost()
                 }
                 print("No more posts")
@@ -611,17 +680,17 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 print("No more posts")
             }
         }
-        let post = self.posts[likesRankRow] as! [String: AnyObject]  //get category from firebase
+        let post = self.posts[self.likesRankIndexPath.row] as! [String: AnyObject]  //get category from firebase
         let postCategory = post["category"] as! String
+        print(postCategory)
         
         if(sortByCat1){
             if(cat1.lowercased() != postCategory.lowercased()){
                 if(!stopSearching){
-                    print("searching for next post with category lol")
                     nextPost()
                 }
             }else{
-                goBackToRow = likesRankRow    //save the row of the last image in the category
+                self.goBackToRow = self.likesRankRow    //save the row of the last image in the category
             }
         }else if(sortByCat2){
             if(cat2.lowercased() != postCategory.lowercased()){
@@ -629,15 +698,19 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                     nextPost()
                 }
             }else{
-                goBackToRow = likesRankRow    //save the row of the last image in the category
+                self.goBackToRow = self.likesRankRow    //save the row of the last image in the category
             }
         }else if(sortByCat3){
+            print("searching with o")
             if(cat3.lowercased() != postCategory.lowercased()){
+                print("post isn't o")
                 if(!stopSearching){
+                    print("searching for next post with category o")
                     nextPost()
                 }
             }else{
-                goBackToRow = likesRankRow    //save the row of the last image in the category
+                print("found")
+                self.goBackToRow = self.likesRankRow    //save the row of the last image in the category
             }
         }else if(sortByCat4){
             if(cat4.lowercased() != postCategory.lowercased()){
@@ -645,7 +718,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                     nextPost()
                 }
             }else{
-                goBackToRow = likesRankRow    //save the row of the last image in the category
+                self.goBackToRow = self.likesRankRow    //save the row of the last image in the category
             }
         }
         
@@ -675,8 +748,8 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         }else{                                          //category menu closed, so open it
             categoryMenuOpen = true
             UIView.animate(withDuration: 0.2, animations: {
-                self.popularCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: (self.categoryMenuButton.frame.origin.y + self.popularCategoryButton.frame.height - 4))
-                self.recentCategoryButton.frame.origin = CGPoint(x: (self.recentCategoryButton.frame.origin.x ), y: (self.categoryMenuButton.frame.origin.y + self.popularCategoryButton.frame.height + self.recentCategoryButton.frame.height - 4))
+                self.popularCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: (self.categoryMenuButton.frame.origin.y + self.popularCategoryButton.frame.height + 18))
+                self.recentCategoryButton.frame.origin = CGPoint(x: (self.recentCategoryButton.frame.origin.x ), y: (self.categoryMenuButton.frame.origin.y + self.popularCategoryButton.frame.height + self.recentCategoryButton.frame.height + 18))
                 
                 var y = self.recentCategoryButton.frame.origin.y + self.recentCategoryButton.frame.height
                 if(self.cat1Available){                                  //add in extra category buttons
@@ -774,6 +847,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         sortByCat3 = false
         sortByCat4 = false
         likesRankRow = -1
+        goBackToRow = 0
         nextPost()
         self.categoryMenuButton.setTitle(cat1, for: .normal)
         UIView.animate(withDuration: 0.2, animations: {
@@ -802,6 +876,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         sortByCat3 = false
         sortByCat4 = false
         likesRankRow = -1
+        goBackToRow = 0
         nextPost()
         self.categoryMenuButton.setTitle(cat2, for: .normal)
         UIView.animate(withDuration: 0.2, animations: {
@@ -830,6 +905,8 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         sortByCat3 = true
         sortByCat4 = false
         likesRankRow = -1
+        goBackToRow = 0
+        print("search for first cat o")
         nextPost()
         self.categoryMenuButton.setTitle(cat3, for: .normal)
         UIView.animate(withDuration: 0.2, animations: {
@@ -858,6 +935,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         sortByCat3 = false
         sortByCat4 = true
         likesRankRow = -1
+        goBackToRow = 0
         nextPost()
         self.categoryMenuButton.setTitle(cat4, for: .normal)
         UIView.animate(withDuration: 0.2, animations: {
@@ -924,24 +1002,13 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     
-    /*    for tommorow
-     
-     postimageview? alpha less when wheel shown so easier to see
-     add category sort/side bar
-     
-     
-     
-     
+    /*
      to do
-     category sort
+     change time deletion part
+     category sort error
      user score
-     side bar
-     save image
-     manage categories
-     first and last image screen
-     list of posts users already saw so they dont view again when reopening app?
-     
-     
+     first and last image message
+     limit to number of posts to sort?
      
      
      
