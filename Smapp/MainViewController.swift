@@ -29,7 +29,15 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var cat2Button: UIButton!
     @IBOutlet weak var cat3Button: UIButton!
     @IBOutlet weak var cat4Button: UIButton!
+    @IBOutlet weak var cat5Button: UIButton!
+    @IBOutlet weak var cat6Button: UIButton!
+    @IBOutlet weak var cat7Button: UIButton!
+    @IBOutlet weak var cat8Button: UIButton!
+    @IBOutlet weak var cat9Button: UIButton!
+    @IBOutlet weak var cat10Button: UIButton!
+    @IBOutlet weak var centerInfoText: UITextView!
     
+   
     var posts = NSMutableArray()
     var touchPressedX = CGFloat()
     var touchReleasedX = CGFloat()
@@ -56,14 +64,32 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     var cat2Available = false
     var cat3Available = false
     var cat4Available = false
+    var cat5Available = false
+    var cat6Available = false
+    var cat7Available = false
+    var cat8Available = false
+    var cat9Available = false
+    var cat10Available = false
     var cat1: String!
     var cat2: String!
     var cat3: String!
     var cat4: String!
+    var cat5: String!
+    var cat6: String!
+    var cat7: String!
+    var cat8: String!
+    var cat9: String!
+    var cat10: String!
     var sortByCat1 = false
     var sortByCat2 = false
     var sortByCat3 = false
     var sortByCat4 = false
+    var sortByCat5 = false
+    var sortByCat6 = false
+    var sortByCat7 = false
+    var sortByCat8 = false
+    var sortByCat9 = false
+    var sortByCat10 = false
     var stopSearching = false
     var goBackToRow = Int()
     
@@ -96,11 +122,23 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.cat2Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
         self.cat3Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
         self.cat4Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+        self.cat5Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+        self.cat6Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+        self.cat7Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+        self.cat8Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+        self.cat9Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+        self.cat10Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
         
         self.cat1Button.alpha = 0
         self.cat2Button.alpha = 0
         self.cat3Button.alpha = 0
         self.cat4Button.alpha = 0
+        self.cat5Button.alpha = 0
+        self.cat6Button.alpha = 0
+        self.cat7Button.alpha = 0
+        self.cat8Button.alpha = 0
+        self.cat9Button.alpha = 0
+        self.cat10Button.alpha = 0
         self.popularCategoryButton.alpha = 0
         self.recentCategoryButton.alpha = 0
         
@@ -113,8 +151,16 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.cat2Button.backgroundColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
         self.cat3Button.backgroundColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
         self.cat4Button.backgroundColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
+        self.cat5Button.backgroundColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
+        self.cat6Button.backgroundColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
+        self.cat7Button.backgroundColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
+        self.cat8Button.backgroundColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
+        self.cat9Button.backgroundColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
+        self.cat10Button.backgroundColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
         
         self.goBackToRow = 0
+        
+        self.centerInfoText.alpha = 0
         
         //setup buttons
         
@@ -126,6 +172,12 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.cat2 = post["cat2"] as? String
                 self.cat3 = post["cat3"] as? String
                 self.cat4 = post["cat4"] as? String
+                self.cat5 = post["cat5"] as? String
+                self.cat6 = post["cat6"] as? String
+                self.cat7 = post["cat7"] as? String
+                self.cat8 = post["cat8"] as? String
+                self.cat9 = post["cat9"] as? String
+                self.cat10 = post["cat10"] as? String
             }
             if(self.cat1 != ""){
                 self.cat1Available = true
@@ -142,6 +194,30 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             if(self.cat4 != ""){
                 self.cat4Available = true
                 self.cat4Button.setTitle(self.cat4, for: .normal)
+            }
+            if(self.cat5 != ""){
+                self.cat5Available = true
+                self.cat5Button.setTitle(self.cat5, for: .normal)
+            }
+            if(self.cat6 != ""){
+                self.cat6Available = true
+                self.cat6Button.setTitle(self.cat6, for: .normal)
+            }
+            if(self.cat7 != ""){
+                self.cat7Available = true
+                self.cat7Button.setTitle(self.cat7, for: .normal)
+            }
+            if(self.cat8 != ""){
+                self.cat8Available = true
+                self.cat8Button.setTitle(self.cat8, for: .normal)
+            }
+            if(self.cat9 != ""){
+                self.cat9Available = true
+                self.cat9Button.setTitle(self.cat9, for: .normal)
+            }
+            if(self.cat10 != ""){
+                self.cat10Available = true
+                self.cat10Button.setTitle(self.cat10, for: .normal)
             }
         })
         
@@ -515,11 +591,23 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.cat2Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
                 self.cat3Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
                 self.cat4Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+                self.cat5Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+                self.cat6Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+                self.cat7Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+                self.cat8Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+                self.cat9Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+                self.cat10Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
                 
                 self.cat1Button.alpha = 0
                 self.cat2Button.alpha = 0
                 self.cat3Button.alpha = 0
                 self.cat4Button.alpha = 0
+                self.cat5Button.alpha = 0
+                self.cat6Button.alpha = 0
+                self.cat7Button.alpha = 0
+                self.cat8Button.alpha = 0
+                self.cat9Button.alpha = 0
+                self.cat10Button.alpha = 0
                 self.popularCategoryButton.alpha = 0
                 self.recentCategoryButton.alpha = 0
                 self.grayBackgroundCoat.alpha = 0
@@ -547,14 +635,26 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             var a = post["likes"] as? Int
             a = a! + 1
             base.child("posts").child(ref).child("likes").setValue(a)
-            base.child("posts").child(ref).child("userWhoLikedID").child("\(uid)").setValue("a")
+            base.child("posts").child(ref).child("userWhoLikedID").child("\(uid)").setValue("a")  //increase post score
             
+            let postUserID = post["uid"] as? String
+            FIRDatabase.database().reference().child("users").child(postUserID!).child("score").observeSingleEvent(of: .value, with: { (snapshot) in
+                if let score = snapshot.value as? [String: AnyObject]{    //get users score
+                    var b = score["score"] as? Int
+                    b = b! + 1
+                    let scoreObject = ["score" : b!]
+                    base.child("users").child(postUserID!).child("score").setValue(scoreObject)  //change score by +1
+                }
+            })
         }
         
         
         
     }
-    func savePost(_ indexPath1: IndexPath){              //SAVE = Dislike
+    //SAVE = Dislike //
+    //SAVE = Dislike //
+    
+    func savePost(_ indexPath1: IndexPath){              //SAVE = Dislike //
         let post = self.posts[(indexPath1.row)] as! [String: AnyObject]  //get likes int from firebase
         let ref = post["postID"] as! String
         
@@ -571,7 +671,20 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             a = a! - 1
             base.child("posts").child(ref).child("likes").setValue(a)
             base.child("posts").child(ref).child("userWhoDislikedID").child("\(uid)").setValue("a")
+            if(a! < -4){
+                base.child("posts").child(ref).removeValue()  //if -5 likes, delete post
+            }
             
+            
+            let postUserID = post["uid"] as? String
+            FIRDatabase.database().reference().child("users").child(postUserID!).child("score").observeSingleEvent(of: .value, with: { (snapshot) in
+                if let score = snapshot.value as? [String: AnyObject]{    //get users score
+                    var b = score["score"] as? Int
+                    b = b! - 1
+                    let scoreObject = ["score" : b!]
+                    base.child("users").child(postUserID!).child("score").setValue(scoreObject)  //change score by -1
+                }
+            })
         }
         
     }
@@ -587,7 +700,14 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             }else{
                 //no more posts to go back to
                 stopSearching = true
-                if(sortByCat1 || sortByCat2 || sortByCat3 || sortByCat4){
+                self.centerInfoText.text = "No Posts Before"
+                UIView.animate(withDuration: 1.2, animations: {   //popup text appear
+                    self.centerInfoText.alpha = 0.8
+                })
+                UIView.animate(withDuration: 1.8, animations: {   //popup text disappear
+                    self.centerInfoText.alpha = 0
+                })
+                if(sortByCat1 || sortByCat2 || sortByCat3 || sortByCat4 || sortByCat5 || sortByCat6 || sortByCat7 || sortByCat8 || sortByCat9 || sortByCat10){
                     likesRankRow = goBackToRow + 1
                     goBackPost()
                 }
@@ -603,6 +723,13 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.postsTableView.scrollToRow(at: recentRankIndexPath, at: UITableViewScrollPosition.top, animated: false)//go to next tmost recent post
             }else{
                 //no more posts to go back to
+                self.centerInfoText.text = "No Posts Before"
+                UIView.animate(withDuration: 1.2, animations: {   //popup text appear
+                    self.centerInfoText.alpha = 0.8
+                })
+                UIView.animate(withDuration: 1.8, animations: {   //popup text disappear
+                    self.centerInfoText.alpha = 0
+                })
                 print("No post before")
             }
         }
@@ -636,6 +763,54 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }else if(sortByCat4){
             if(cat4.lowercased() != postCategory.lowercased()){
+                if(!stopSearching){
+                    goBackPost()
+                }
+            }else{
+                goBackToRow = likesRankRow    //save the row of the last image in the category
+            }
+        }else if(sortByCat5){
+            if(cat5.lowercased() != postCategory.lowercased()){
+                if(!stopSearching){
+                    goBackPost()
+                }
+            }else{
+                goBackToRow = likesRankRow    //save the row of the last image in the category
+            }
+        }else if(sortByCat6){
+            if(cat6.lowercased() != postCategory.lowercased()){
+                if(!stopSearching){
+                    goBackPost()
+                }
+            }else{
+                goBackToRow = likesRankRow    //save the row of the last image in the category
+            }
+        }else if(sortByCat7){
+            if(cat7.lowercased() != postCategory.lowercased()){
+                if(!stopSearching){
+                    goBackPost()
+                }
+            }else{
+                goBackToRow = likesRankRow    //save the row of the last image in the category
+            }
+        }else if(sortByCat8){
+            if(cat8.lowercased() != postCategory.lowercased()){
+                if(!stopSearching){
+                    goBackPost()
+                }
+            }else{
+                goBackToRow = likesRankRow    //save the row of the last image in the category
+            }
+        }else if(sortByCat9){
+            if(cat9.lowercased() != postCategory.lowercased()){
+                if(!stopSearching){
+                    goBackPost()
+                }
+            }else{
+                goBackToRow = likesRankRow    //save the row of the last image in the category
+            }
+        }else if(sortByCat10){
+            if(cat10.lowercased() != postCategory.lowercased()){
                 if(!stopSearching){
                     goBackPost()
                 }
@@ -661,7 +836,14 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             }else{
                 //no more posts to view
                 stopSearching = true
-                if(sortByCat1 || sortByCat2 || sortByCat3 || sortByCat4){
+                self.centerInfoText.text = "No More Posts"
+                UIView.animate(withDuration: 1.2, animations: {   //popup text appear
+                    self.centerInfoText.alpha = 0.8
+                })
+                UIView.animate(withDuration: 1.8, animations: {   //popup text disappear
+                    self.centerInfoText.alpha = 0
+                })
+                if(sortByCat1 || sortByCat2 || sortByCat3 || sortByCat4 || sortByCat5 || sortByCat6 || sortByCat7 || sortByCat8 || sortByCat9 || sortByCat10){
                     self.likesRankRow = self.goBackToRow - 1
                     nextPost()
                 }
@@ -677,13 +859,20 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.postsTableView.scrollToRow(at: recentRankIndexPath, at: UITableViewScrollPosition.top, animated: false)//go to next tmost recent post
             }else{
                 //no more posts to view
+                self.centerInfoText.text = "No More Posts"
+                UIView.animate(withDuration: 1.2, animations: {   //popup text appear
+                    self.centerInfoText.alpha = 0.8
+                })
+                UIView.animate(withDuration: 1.8, animations: {   //popup text disappear
+                    self.centerInfoText.alpha = 0
+                })
                 print("No more posts")
             }
         }
         let post = self.posts[self.likesRankIndexPath.row] as! [String: AnyObject]  //get category from firebase
         let postCategory = post["category"] as! String
         print(postCategory)
-        
+        print(cat3)
         if(sortByCat1){
             if(cat1.lowercased() != postCategory.lowercased()){
                 if(!stopSearching){
@@ -701,19 +890,67 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.goBackToRow = self.likesRankRow    //save the row of the last image in the category
             }
         }else if(sortByCat3){
-            print("searching with o")
+            print("a")
             if(cat3.lowercased() != postCategory.lowercased()){
-                print("post isn't o")
+                print("b")
                 if(!stopSearching){
-                    print("searching for next post with category o")
+                    print("c")
                     nextPost()
                 }
             }else{
-                print("found")
+                print("d")
                 self.goBackToRow = self.likesRankRow    //save the row of the last image in the category
             }
         }else if(sortByCat4){
             if(cat4.lowercased() != postCategory.lowercased()){
+                if(!stopSearching){
+                    nextPost()
+                }
+            }else{
+                self.goBackToRow = self.likesRankRow    //save the row of the last image in the category
+            }
+        }else if(sortByCat5){
+            if(cat5.lowercased() != postCategory.lowercased()){
+                if(!stopSearching){
+                    nextPost()
+                }
+            }else{
+                self.goBackToRow = self.likesRankRow    //save the row of the last image in the category
+            }
+        }else if(sortByCat6){
+            if(cat6.lowercased() != postCategory.lowercased()){
+                if(!stopSearching){
+                    nextPost()
+                }
+            }else{
+                self.goBackToRow = self.likesRankRow    //save the row of the last image in the category
+            }
+        }else if(sortByCat7){
+            if(cat7.lowercased() != postCategory.lowercased()){
+                if(!stopSearching){
+                    nextPost()
+                }
+            }else{
+                self.goBackToRow = self.likesRankRow    //save the row of the last image in the category
+            }
+        }else if(sortByCat8){
+            if(cat8.lowercased() != postCategory.lowercased()){
+                if(!stopSearching){
+                    nextPost()
+                }
+            }else{
+                self.goBackToRow = self.likesRankRow    //save the row of the last image in the category
+            }
+        }else if(sortByCat9){
+            if(cat9.lowercased() != postCategory.lowercased()){
+                if(!stopSearching){
+                    nextPost()
+                }
+            }else{
+                self.goBackToRow = self.likesRankRow    //save the row of the last image in the category
+            }
+        }else if(sortByCat10){
+            if(cat10.lowercased() != postCategory.lowercased()){
                 if(!stopSearching){
                     nextPost()
                 }
@@ -735,11 +972,23 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.cat2Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
                 self.cat3Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
                 self.cat4Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+                self.cat5Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+                self.cat6Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+                self.cat7Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+                self.cat8Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+                self.cat9Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+                self.cat10Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
                 
                 self.cat1Button.alpha = 0
                 self.cat2Button.alpha = 0
                 self.cat3Button.alpha = 0
                 self.cat4Button.alpha = 0
+                self.cat5Button.alpha = 0
+                self.cat6Button.alpha = 0
+                self.cat7Button.alpha = 0
+                self.cat8Button.alpha = 0
+                self.cat9Button.alpha = 0
+                self.cat10Button.alpha = 0
                 self.popularCategoryButton.alpha = 0
                 self.recentCategoryButton.alpha = 0
                 self.grayBackgroundCoat.alpha = 0
@@ -772,6 +1021,36 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                     y  = self.cat4Button.frame.origin.y + self.cat4Button.frame.height
                     self.cat4Button.alpha = 1
                 }
+                if(self.cat5Available){
+                    self.cat5Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: y)
+                    y  = self.cat5Button.frame.origin.y + self.cat5Button.frame.height
+                    self.cat5Button.alpha = 1
+                }
+                if(self.cat6Available){
+                    self.cat6Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: y)
+                    y  = self.cat6Button.frame.origin.y + self.cat6Button.frame.height
+                    self.cat6Button.alpha = 1
+                }
+                if(self.cat7Available){
+                    self.cat7Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: y)
+                    y  = self.cat7Button.frame.origin.y + self.cat7Button.frame.height
+                    self.cat7Button.alpha = 1
+                }
+                if(self.cat8Available){
+                    self.cat8Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: y)
+                    y  = self.cat8Button.frame.origin.y + self.cat8Button.frame.height
+                    self.cat8Button.alpha = 1
+                }
+                if(self.cat9Available){
+                    self.cat9Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: y)
+                    y  = self.cat9Button.frame.origin.y + self.cat9Button.frame.height
+                    self.cat9Button.alpha = 1
+                }
+                if(self.cat10Available){
+                    self.cat10Button.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: y)
+                    y  = self.cat10Button.frame.origin.y + self.cat10Button.frame.height
+                    self.cat10Button.alpha = 1
+                }
                 
                 self.popularCategoryButton.alpha = 1
                 self.recentCategoryButton.alpha = 1
@@ -788,6 +1067,13 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         sortByCat2 = false
         sortByCat3 = false
         sortByCat4 = false
+        sortByCat5 = false
+        sortByCat6 = false
+        sortByCat7 = false
+        sortByCat8 = false
+        sortByCat9 = false
+        sortByCat10 = false
+        stopSearching = false
         recentRankRow = -1
         nextPost()
         self.categoryMenuButton.setTitle("Recent", for: .normal)
@@ -798,11 +1084,23 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.cat2Button.frame.origin = CGPoint(x: (self.cat2Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             self.cat3Button.frame.origin = CGPoint(x: (self.cat3Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             self.cat4Button.frame.origin = CGPoint(x: (self.cat4Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat5Button.frame.origin = CGPoint(x: (self.cat5Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat6Button.frame.origin = CGPoint(x: (self.cat6Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat7Button.frame.origin = CGPoint(x: (self.cat7Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat8Button.frame.origin = CGPoint(x: (self.cat8Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat9Button.frame.origin = CGPoint(x: (self.cat9Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat10Button.frame.origin = CGPoint(x: (self.cat10Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             
             self.cat1Button.alpha = 0
             self.cat2Button.alpha = 0
             self.cat3Button.alpha = 0
             self.cat4Button.alpha = 0
+            self.cat5Button.alpha = 0
+            self.cat6Button.alpha = 0
+            self.cat7Button.alpha = 0
+            self.cat8Button.alpha = 0
+            self.cat9Button.alpha = 0
+            self.cat10Button.alpha = 0
             self.popularCategoryButton.alpha = 0
             self.recentCategoryButton.alpha = 0
             self.grayBackgroundCoat.alpha = 0
@@ -811,57 +1109,95 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func popularCategoryTapped(_ sender: Any) {                   //popular selected as category
         categoryMenuOpen = false
-        sortByLikes = true
         sortByTime = false
+        sortByLikes = true
         sortByCat1 = false
         sortByCat2 = false
         sortByCat3 = false
         sortByCat4 = false
-        likesRankRow = -1
+        sortByCat5 = false
+        sortByCat6 = false
+        sortByCat7 = false
+        sortByCat8 = false
+        sortByCat9 = false
+        sortByCat10 = false
+        stopSearching = false
+        recentRankRow = -1
         nextPost()
         self.categoryMenuButton.setTitle("Popular", for: .normal)
         UIView.animate(withDuration: 0.2, animations: {
             self.popularCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
-            self.recentCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.recentCategoryButton.frame.origin = CGPoint(x: (self.recentCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             self.cat1Button.frame.origin = CGPoint(x: (self.cat1Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             self.cat2Button.frame.origin = CGPoint(x: (self.cat2Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             self.cat3Button.frame.origin = CGPoint(x: (self.cat3Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             self.cat4Button.frame.origin = CGPoint(x: (self.cat4Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat5Button.frame.origin = CGPoint(x: (self.cat5Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat6Button.frame.origin = CGPoint(x: (self.cat6Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat7Button.frame.origin = CGPoint(x: (self.cat7Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat8Button.frame.origin = CGPoint(x: (self.cat8Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat9Button.frame.origin = CGPoint(x: (self.cat9Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat10Button.frame.origin = CGPoint(x: (self.cat10Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             
             self.cat1Button.alpha = 0
             self.cat2Button.alpha = 0
             self.cat3Button.alpha = 0
             self.cat4Button.alpha = 0
+            self.cat5Button.alpha = 0
+            self.cat6Button.alpha = 0
+            self.cat7Button.alpha = 0
+            self.cat8Button.alpha = 0
+            self.cat9Button.alpha = 0
+            self.cat10Button.alpha = 0
             self.popularCategoryButton.alpha = 0
             self.recentCategoryButton.alpha = 0
             self.grayBackgroundCoat.alpha = 0
         })
+
     }
     
     @IBAction func cat1ButtonTapped(_ sender: Any) {
         categoryMenuOpen = false
-        sortByLikes = true
         sortByTime = false
+        sortByLikes = true
         sortByCat1 = true
         sortByCat2 = false
         sortByCat3 = false
         sortByCat4 = false
-        likesRankRow = -1
-        goBackToRow = 0
+        sortByCat5 = false
+        sortByCat6 = false
+        sortByCat7 = false
+        sortByCat8 = false
+        sortByCat9 = false
+        sortByCat10 = false
+        stopSearching = false
+        recentRankRow = -1
         nextPost()
         self.categoryMenuButton.setTitle(cat1, for: .normal)
         UIView.animate(withDuration: 0.2, animations: {
             self.popularCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
-            self.recentCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.recentCategoryButton.frame.origin = CGPoint(x: (self.recentCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             self.cat1Button.frame.origin = CGPoint(x: (self.cat1Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             self.cat2Button.frame.origin = CGPoint(x: (self.cat2Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             self.cat3Button.frame.origin = CGPoint(x: (self.cat3Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             self.cat4Button.frame.origin = CGPoint(x: (self.cat4Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat5Button.frame.origin = CGPoint(x: (self.cat5Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat6Button.frame.origin = CGPoint(x: (self.cat6Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat7Button.frame.origin = CGPoint(x: (self.cat7Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat8Button.frame.origin = CGPoint(x: (self.cat8Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat9Button.frame.origin = CGPoint(x: (self.cat9Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat10Button.frame.origin = CGPoint(x: (self.cat10Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             
             self.cat1Button.alpha = 0
             self.cat2Button.alpha = 0
             self.cat3Button.alpha = 0
             self.cat4Button.alpha = 0
+            self.cat5Button.alpha = 0
+            self.cat6Button.alpha = 0
+            self.cat7Button.alpha = 0
+            self.cat8Button.alpha = 0
+            self.cat9Button.alpha = 0
+            self.cat10Button.alpha = 0
             self.popularCategoryButton.alpha = 0
             self.recentCategoryButton.alpha = 0
             self.grayBackgroundCoat.alpha = 0
@@ -869,28 +1205,46 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     @IBAction func cat2ButtonTapped(_ sender: Any) {
         categoryMenuOpen = false
-        sortByLikes = true
         sortByTime = false
+        sortByLikes = true
         sortByCat1 = false
         sortByCat2 = true
         sortByCat3 = false
         sortByCat4 = false
-        likesRankRow = -1
-        goBackToRow = 0
+        sortByCat5 = false
+        sortByCat6 = false
+        sortByCat7 = false
+        sortByCat8 = false
+        sortByCat9 = false
+        sortByCat10 = false
+        stopSearching = false
+        recentRankRow = -1
         nextPost()
         self.categoryMenuButton.setTitle(cat2, for: .normal)
         UIView.animate(withDuration: 0.2, animations: {
             self.popularCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
-            self.recentCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.recentCategoryButton.frame.origin = CGPoint(x: (self.recentCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             self.cat1Button.frame.origin = CGPoint(x: (self.cat1Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             self.cat2Button.frame.origin = CGPoint(x: (self.cat2Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             self.cat3Button.frame.origin = CGPoint(x: (self.cat3Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             self.cat4Button.frame.origin = CGPoint(x: (self.cat4Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat5Button.frame.origin = CGPoint(x: (self.cat5Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat6Button.frame.origin = CGPoint(x: (self.cat6Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat7Button.frame.origin = CGPoint(x: (self.cat7Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat8Button.frame.origin = CGPoint(x: (self.cat8Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat9Button.frame.origin = CGPoint(x: (self.cat9Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat10Button.frame.origin = CGPoint(x: (self.cat10Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             
             self.cat1Button.alpha = 0
             self.cat2Button.alpha = 0
             self.cat3Button.alpha = 0
             self.cat4Button.alpha = 0
+            self.cat5Button.alpha = 0
+            self.cat6Button.alpha = 0
+            self.cat7Button.alpha = 0
+            self.cat8Button.alpha = 0
+            self.cat9Button.alpha = 0
+            self.cat10Button.alpha = 0
             self.popularCategoryButton.alpha = 0
             self.recentCategoryButton.alpha = 0
             self.grayBackgroundCoat.alpha = 0
@@ -898,29 +1252,46 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     @IBAction func cat3ButtonTapped(_ sender: Any) {
         categoryMenuOpen = false
-        sortByLikes = true
         sortByTime = false
+        sortByLikes = true
         sortByCat1 = false
         sortByCat2 = false
         sortByCat3 = true
         sortByCat4 = false
-        likesRankRow = -1
-        goBackToRow = 0
-        print("search for first cat o")
+        sortByCat5 = false
+        sortByCat6 = false
+        sortByCat7 = false
+        sortByCat8 = false
+        sortByCat9 = false
+        sortByCat10 = false
+        stopSearching = false
+        recentRankRow = -1
         nextPost()
         self.categoryMenuButton.setTitle(cat3, for: .normal)
         UIView.animate(withDuration: 0.2, animations: {
             self.popularCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
-            self.recentCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.recentCategoryButton.frame.origin = CGPoint(x: (self.recentCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             self.cat1Button.frame.origin = CGPoint(x: (self.cat1Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             self.cat2Button.frame.origin = CGPoint(x: (self.cat2Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             self.cat3Button.frame.origin = CGPoint(x: (self.cat3Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             self.cat4Button.frame.origin = CGPoint(x: (self.cat4Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat5Button.frame.origin = CGPoint(x: (self.cat5Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat6Button.frame.origin = CGPoint(x: (self.cat6Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat7Button.frame.origin = CGPoint(x: (self.cat7Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat8Button.frame.origin = CGPoint(x: (self.cat8Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat9Button.frame.origin = CGPoint(x: (self.cat9Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat10Button.frame.origin = CGPoint(x: (self.cat10Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             
             self.cat1Button.alpha = 0
             self.cat2Button.alpha = 0
             self.cat3Button.alpha = 0
             self.cat4Button.alpha = 0
+            self.cat5Button.alpha = 0
+            self.cat6Button.alpha = 0
+            self.cat7Button.alpha = 0
+            self.cat8Button.alpha = 0
+            self.cat9Button.alpha = 0
+            self.cat10Button.alpha = 0
             self.popularCategoryButton.alpha = 0
             self.recentCategoryButton.alpha = 0
             self.grayBackgroundCoat.alpha = 0
@@ -928,33 +1299,334 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     @IBAction func cat4ButtonTapped(_ sender: Any) {
         categoryMenuOpen = false
-        sortByLikes = true
         sortByTime = false
+        sortByLikes = true
         sortByCat1 = false
         sortByCat2 = false
         sortByCat3 = false
         sortByCat4 = true
-        likesRankRow = -1
-        goBackToRow = 0
+        sortByCat5 = false
+        sortByCat6 = false
+        sortByCat7 = false
+        sortByCat8 = false
+        sortByCat9 = false
+        sortByCat10 = false
+        stopSearching = false
+        recentRankRow = -1
         nextPost()
         self.categoryMenuButton.setTitle(cat4, for: .normal)
         UIView.animate(withDuration: 0.2, animations: {
             self.popularCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
-            self.recentCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.recentCategoryButton.frame.origin = CGPoint(x: (self.recentCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             self.cat1Button.frame.origin = CGPoint(x: (self.cat1Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             self.cat2Button.frame.origin = CGPoint(x: (self.cat2Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             self.cat3Button.frame.origin = CGPoint(x: (self.cat3Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             self.cat4Button.frame.origin = CGPoint(x: (self.cat4Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat5Button.frame.origin = CGPoint(x: (self.cat5Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat6Button.frame.origin = CGPoint(x: (self.cat6Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat7Button.frame.origin = CGPoint(x: (self.cat7Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat8Button.frame.origin = CGPoint(x: (self.cat8Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat9Button.frame.origin = CGPoint(x: (self.cat9Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat10Button.frame.origin = CGPoint(x: (self.cat10Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
             
             self.cat1Button.alpha = 0
             self.cat2Button.alpha = 0
             self.cat3Button.alpha = 0
             self.cat4Button.alpha = 0
+            self.cat5Button.alpha = 0
+            self.cat6Button.alpha = 0
+            self.cat7Button.alpha = 0
+            self.cat8Button.alpha = 0
+            self.cat9Button.alpha = 0
+            self.cat10Button.alpha = 0
             self.popularCategoryButton.alpha = 0
             self.recentCategoryButton.alpha = 0
             self.grayBackgroundCoat.alpha = 0
         })
     }
+    @IBAction func cat5ButtonTapped(_ sender: Any) {
+        categoryMenuOpen = false
+        sortByTime = false
+        sortByLikes = true
+        sortByCat1 = false
+        sortByCat2 = false
+        sortByCat3 = false
+        sortByCat4 = false
+        sortByCat5 = true
+        sortByCat6 = false
+        sortByCat7 = false
+        sortByCat8 = false
+        sortByCat9 = false
+        sortByCat10 = false
+        stopSearching = false
+        recentRankRow = -1
+        nextPost()
+        self.categoryMenuButton.setTitle(cat5, for: .normal)
+        UIView.animate(withDuration: 0.2, animations: {
+            self.popularCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.recentCategoryButton.frame.origin = CGPoint(x: (self.recentCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat1Button.frame.origin = CGPoint(x: (self.cat1Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat2Button.frame.origin = CGPoint(x: (self.cat2Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat3Button.frame.origin = CGPoint(x: (self.cat3Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat4Button.frame.origin = CGPoint(x: (self.cat4Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat5Button.frame.origin = CGPoint(x: (self.cat5Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat6Button.frame.origin = CGPoint(x: (self.cat6Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat7Button.frame.origin = CGPoint(x: (self.cat7Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat8Button.frame.origin = CGPoint(x: (self.cat8Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat9Button.frame.origin = CGPoint(x: (self.cat9Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat10Button.frame.origin = CGPoint(x: (self.cat10Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            
+            self.cat1Button.alpha = 0
+            self.cat2Button.alpha = 0
+            self.cat3Button.alpha = 0
+            self.cat4Button.alpha = 0
+            self.cat5Button.alpha = 0
+            self.cat6Button.alpha = 0
+            self.cat7Button.alpha = 0
+            self.cat8Button.alpha = 0
+            self.cat9Button.alpha = 0
+            self.cat10Button.alpha = 0
+            self.popularCategoryButton.alpha = 0
+            self.recentCategoryButton.alpha = 0
+            self.grayBackgroundCoat.alpha = 0
+        })
+    }
+    @IBAction func cat6ButtonTapped(_ sender: Any) {
+        categoryMenuOpen = false
+        sortByTime = false
+        sortByLikes = true
+        sortByCat1 = false
+        sortByCat2 = false
+        sortByCat3 = false
+        sortByCat4 = false
+        sortByCat5 = false
+        sortByCat6 = true
+        sortByCat7 = false
+        sortByCat8 = false
+        sortByCat9 = false
+        sortByCat10 = false
+        stopSearching = false
+        recentRankRow = -1
+        nextPost()
+        self.categoryMenuButton.setTitle(cat6, for: .normal)
+        UIView.animate(withDuration: 0.2, animations: {
+            self.popularCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.recentCategoryButton.frame.origin = CGPoint(x: (self.recentCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat1Button.frame.origin = CGPoint(x: (self.cat1Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat2Button.frame.origin = CGPoint(x: (self.cat2Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat3Button.frame.origin = CGPoint(x: (self.cat3Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat4Button.frame.origin = CGPoint(x: (self.cat4Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat5Button.frame.origin = CGPoint(x: (self.cat5Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat6Button.frame.origin = CGPoint(x: (self.cat6Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat7Button.frame.origin = CGPoint(x: (self.cat7Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat8Button.frame.origin = CGPoint(x: (self.cat8Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat9Button.frame.origin = CGPoint(x: (self.cat9Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat10Button.frame.origin = CGPoint(x: (self.cat10Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            
+            self.cat1Button.alpha = 0
+            self.cat2Button.alpha = 0
+            self.cat3Button.alpha = 0
+            self.cat4Button.alpha = 0
+            self.cat5Button.alpha = 0
+            self.cat6Button.alpha = 0
+            self.cat7Button.alpha = 0
+            self.cat8Button.alpha = 0
+            self.cat9Button.alpha = 0
+            self.cat10Button.alpha = 0
+            self.popularCategoryButton.alpha = 0
+            self.recentCategoryButton.alpha = 0
+            self.grayBackgroundCoat.alpha = 0
+        })
+    }
+    @IBAction func cat7ButtonTapped(_ sender: Any) {
+        categoryMenuOpen = false
+        sortByTime = false
+        sortByLikes = true
+        sortByCat1 = false
+        sortByCat2 = false
+        sortByCat3 = false
+        sortByCat4 = false
+        sortByCat5 = false
+        sortByCat6 = false
+        sortByCat7 = true
+        sortByCat8 = false
+        sortByCat9 = false
+        sortByCat10 = false
+        stopSearching = false
+        recentRankRow = -1
+        nextPost()
+        self.categoryMenuButton.setTitle(cat7, for: .normal)
+        UIView.animate(withDuration: 0.2, animations: {
+            self.popularCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.recentCategoryButton.frame.origin = CGPoint(x: (self.recentCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat1Button.frame.origin = CGPoint(x: (self.cat1Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat2Button.frame.origin = CGPoint(x: (self.cat2Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat3Button.frame.origin = CGPoint(x: (self.cat3Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat4Button.frame.origin = CGPoint(x: (self.cat4Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat5Button.frame.origin = CGPoint(x: (self.cat5Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat6Button.frame.origin = CGPoint(x: (self.cat6Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat7Button.frame.origin = CGPoint(x: (self.cat7Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat8Button.frame.origin = CGPoint(x: (self.cat8Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat9Button.frame.origin = CGPoint(x: (self.cat9Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat10Button.frame.origin = CGPoint(x: (self.cat10Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            
+            self.cat1Button.alpha = 0
+            self.cat2Button.alpha = 0
+            self.cat3Button.alpha = 0
+            self.cat4Button.alpha = 0
+            self.cat5Button.alpha = 0
+            self.cat6Button.alpha = 0
+            self.cat7Button.alpha = 0
+            self.cat8Button.alpha = 0
+            self.cat9Button.alpha = 0
+            self.cat10Button.alpha = 0
+            self.popularCategoryButton.alpha = 0
+            self.recentCategoryButton.alpha = 0
+            self.grayBackgroundCoat.alpha = 0
+        })
+    }
+    @IBAction func cat8ButtonTapped(_ sender: Any) {
+        categoryMenuOpen = false
+        sortByTime = false
+        sortByLikes = true
+        sortByCat1 = false
+        sortByCat2 = false
+        sortByCat3 = false
+        sortByCat4 = false
+        sortByCat5 = false
+        sortByCat6 = false
+        sortByCat7 = false
+        sortByCat8 = true
+        sortByCat9 = false
+        sortByCat10 = false
+        stopSearching = false
+        recentRankRow = -1
+        nextPost()
+        self.categoryMenuButton.setTitle(cat8, for: .normal)
+        UIView.animate(withDuration: 0.2, animations: {
+            self.popularCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.recentCategoryButton.frame.origin = CGPoint(x: (self.recentCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat1Button.frame.origin = CGPoint(x: (self.cat1Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat2Button.frame.origin = CGPoint(x: (self.cat2Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat3Button.frame.origin = CGPoint(x: (self.cat3Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat4Button.frame.origin = CGPoint(x: (self.cat4Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat5Button.frame.origin = CGPoint(x: (self.cat5Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat6Button.frame.origin = CGPoint(x: (self.cat6Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat7Button.frame.origin = CGPoint(x: (self.cat7Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat8Button.frame.origin = CGPoint(x: (self.cat8Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat9Button.frame.origin = CGPoint(x: (self.cat9Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat10Button.frame.origin = CGPoint(x: (self.cat10Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            
+            self.cat1Button.alpha = 0
+            self.cat2Button.alpha = 0
+            self.cat3Button.alpha = 0
+            self.cat4Button.alpha = 0
+            self.cat5Button.alpha = 0
+            self.cat6Button.alpha = 0
+            self.cat7Button.alpha = 0
+            self.cat8Button.alpha = 0
+            self.cat9Button.alpha = 0
+            self.cat10Button.alpha = 0
+            self.popularCategoryButton.alpha = 0
+            self.recentCategoryButton.alpha = 0
+            self.grayBackgroundCoat.alpha = 0
+        })
+    }
+    @IBAction func cat9ButtonTapped(_ sender: Any) {
+        categoryMenuOpen = false
+        sortByTime = false
+        sortByLikes = true
+        sortByCat1 = false
+        sortByCat2 = false
+        sortByCat3 = false
+        sortByCat4 = false
+        sortByCat5 = false
+        sortByCat6 = false
+        sortByCat7 = false
+        sortByCat8 = false
+        sortByCat9 = true
+        sortByCat10 = false
+        stopSearching = false
+        recentRankRow = -1
+        nextPost()
+        self.categoryMenuButton.setTitle(cat9, for: .normal)
+        UIView.animate(withDuration: 0.2, animations: {
+            self.popularCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.recentCategoryButton.frame.origin = CGPoint(x: (self.recentCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat1Button.frame.origin = CGPoint(x: (self.cat1Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat2Button.frame.origin = CGPoint(x: (self.cat2Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat3Button.frame.origin = CGPoint(x: (self.cat3Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat4Button.frame.origin = CGPoint(x: (self.cat4Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat5Button.frame.origin = CGPoint(x: (self.cat5Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat6Button.frame.origin = CGPoint(x: (self.cat6Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat7Button.frame.origin = CGPoint(x: (self.cat7Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat8Button.frame.origin = CGPoint(x: (self.cat8Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat9Button.frame.origin = CGPoint(x: (self.cat9Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat10Button.frame.origin = CGPoint(x: (self.cat10Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            
+            self.cat1Button.alpha = 0
+            self.cat2Button.alpha = 0
+            self.cat3Button.alpha = 0
+            self.cat4Button.alpha = 0
+            self.cat5Button.alpha = 0
+            self.cat6Button.alpha = 0
+            self.cat7Button.alpha = 0
+            self.cat8Button.alpha = 0
+            self.cat9Button.alpha = 0
+            self.cat10Button.alpha = 0
+            self.popularCategoryButton.alpha = 0
+            self.recentCategoryButton.alpha = 0
+            self.grayBackgroundCoat.alpha = 0
+        })
+    }
+    @IBAction func cat10ButtonTapped(_ sender: Any) {
+        categoryMenuOpen = false
+        sortByTime = false
+        sortByLikes = true
+        sortByCat1 = false
+        sortByCat2 = false
+        sortByCat3 = false
+        sortByCat4 = false
+        sortByCat5 = false
+        sortByCat6 = false
+        sortByCat7 = false
+        sortByCat8 = false
+        sortByCat9 = false
+        sortByCat10 = true
+        stopSearching = false
+        recentRankRow = -1
+        nextPost()
+        self.categoryMenuButton.setTitle(cat10, for: .normal)
+        UIView.animate(withDuration: 0.2, animations: {
+            self.popularCategoryButton.frame.origin = CGPoint(x: (self.popularCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.recentCategoryButton.frame.origin = CGPoint(x: (self.recentCategoryButton.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat1Button.frame.origin = CGPoint(x: (self.cat1Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat2Button.frame.origin = CGPoint(x: (self.cat2Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat3Button.frame.origin = CGPoint(x: (self.cat3Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat4Button.frame.origin = CGPoint(x: (self.cat4Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat5Button.frame.origin = CGPoint(x: (self.cat5Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat6Button.frame.origin = CGPoint(x: (self.cat6Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat7Button.frame.origin = CGPoint(x: (self.cat7Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat8Button.frame.origin = CGPoint(x: (self.cat8Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat9Button.frame.origin = CGPoint(x: (self.cat9Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            self.cat10Button.frame.origin = CGPoint(x: (self.cat10Button.frame.origin.x ), y: self.categoryMenuButton.frame.origin.y)
+            
+            self.cat1Button.alpha = 0
+            self.cat2Button.alpha = 0
+            self.cat3Button.alpha = 0
+            self.cat4Button.alpha = 0
+            self.cat5Button.alpha = 0
+            self.cat6Button.alpha = 0
+            self.cat7Button.alpha = 0
+            self.cat8Button.alpha = 0
+            self.cat9Button.alpha = 0
+            self.cat10Button.alpha = 0
+            self.popularCategoryButton.alpha = 0
+            self.recentCategoryButton.alpha = 0
+            self.grayBackgroundCoat.alpha = 0
+        })
+    }
+    
     /*
      // Override to support conditional editing of the table view.
      override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -1005,10 +1677,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     /*
      to do
      change time deletion part
-     category sort error
-     user score
-     first and last image message
-     limit to number of posts to sort?
+     add other cats
      
      
      

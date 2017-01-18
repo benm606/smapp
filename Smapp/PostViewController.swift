@@ -11,7 +11,7 @@ import Firebase
 import FirebaseDatabase
 import FirebaseStorage
 
-class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate,UITextViewDelegate {
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var contentTextView: UITextView!
@@ -29,6 +29,12 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
         self.navigationController?.navigationBar.alpha = 0    //set top bar coloring
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
         self.postButton.backgroundColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
+        
+        self.contentTextView.delegate = self
+        
+        self.titleTextField.delegate = self
+        self.titleTextField.tag = 1
+        contentTextField.tag = 0
         
     }
     
@@ -159,6 +165,18 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {   //when touched close keyboard
         view.endEditing(true)
         super.touchesBegan(touches, with: event)
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        // Try to find next responder
+        if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
+            nextField.becomeFirstResponder()
+        } else {
+            // Not found, so remove keyboard.
+            textField.resignFirstResponder()
+        }
+        // Do not add a line break
+        return false
     }
     /*
      // MARK: - Navigation

@@ -11,7 +11,7 @@ import Firebase
 import FirebaseAuth
 
 
-class ViewController: UIViewController{
+class ViewController: UIViewController, UITextFieldDelegate{
     
     
     @IBOutlet weak var usernameTextField: UITextField!
@@ -19,6 +19,11 @@ class ViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.usernameTextField.delegate = self
+        self.passwordTextField.delegate = self
+        self.usernameTextField.tag = 0
+        self.passwordTextField.tag = 1
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -59,6 +64,19 @@ class ViewController: UIViewController{
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {   //when touched close keyboard
         view.endEditing(true)
         super.touchesBegan(touches, with: event)
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        // Try to find next responder
+        if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
+            nextField.becomeFirstResponder()
+        } else {
+            // Not found, so remove keyboard.
+            textField.resignFirstResponder()
+            signInTapped(self)
+        }
+        // Do not add a line break
+        return false
     }
     /*override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){
         view.endEditing(true)
