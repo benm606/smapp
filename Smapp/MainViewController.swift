@@ -37,7 +37,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var cat10Button: UIButton!
     @IBOutlet weak var centerInfoText: UITextView!
     
-   
+    
     var posts = NSMutableArray()
     var touchPressedX = CGFloat()
     var touchReleasedX = CGFloat()
@@ -265,11 +265,17 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                     
                     if(timeCurrent - timePost > 1440){          //check if post is older than 24 hours(1440 mins)
                         print("post old")           //delete post
-                    }else{
                         let postID = post1["postID"] as! String
                         
-                        FIRDatabase.database().reference().child("posts").child(postID).removeValue()
+                        if let imageName1 = post1["image"] as? String{
+                            print("\(imageName1)")
+                            FIRStorage.storage().reference().child("images/\(imageName1)").delete(completion: { (error) in //delete image in storage
+                                //print(error)
+                            })
+                        }
                         skipPost = true
+                        FIRDatabase.database().reference().child("posts").child(postID).removeValue()       //delete post
+                    }else{
                         print("keep post")
                     }
                     
@@ -1153,7 +1159,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.recentCategoryButton.alpha = 0
             self.grayBackgroundCoat.alpha = 0
         })
-
+        
     }
     
     @IBAction func cat1ButtonTapped(_ sender: Any) {

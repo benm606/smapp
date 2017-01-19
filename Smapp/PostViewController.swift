@@ -194,7 +194,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
     func slideUp(a: Any){               //slide view up
         if(!slidUp){
             UIView.animate(withDuration: 0.3, animations: {
-                self.view.frame.origin = CGPoint(x: (self.view.frame.origin.x), y: (self.view.frame.origin.y - 110))
+                self.view.frame.origin = CGPoint(x: (self.view.frame.origin.x), y: (self.view.frame.origin.y - 170))
                 })
             
             slidUp = true
@@ -203,7 +203,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
     func slideDown(){               //slide view down
         if(slidUp){
             UIView.animate(withDuration: 0.3, animations: {
-                self.view.frame.origin = CGPoint(x: (self.view.frame.origin.x), y: (self.view.frame.origin.y + 110))
+                self.view.frame.origin = CGPoint(x: (self.view.frame.origin.x), y: (self.view.frame.origin.y + 170))
             })
             slidUp = false
         }
@@ -214,7 +214,19 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
             slideDown()
             return false
         }
-        return true
+        var numberOfChars = 0.0
+        let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)        //limit to 64 chars
+       // let numberOfChars = newText.characters.count
+        for char in newText.characters{
+            var str = String(char)
+            if str.lowercased() != str {
+                numberOfChars += 1.25
+            }else{
+                numberOfChars += 1.0
+            }
+        }
+        return numberOfChars < 100.0;
+       
     }
     
     
