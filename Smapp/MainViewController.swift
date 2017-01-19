@@ -1122,7 +1122,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         sortByCat9 = false
         sortByCat10 = false
         stopSearching = false
-        recentRankRow = -1
+        likesRankRow = -1
         nextPost()
         self.categoryMenuButton.setTitle("Popular", for: .normal)
         UIView.animate(withDuration: 0.2, animations: {
@@ -1171,7 +1171,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         sortByCat9 = false
         sortByCat10 = false
         stopSearching = false
-        recentRankRow = -1
+        likesRankRow = -1
         nextPost()
         self.categoryMenuButton.setTitle(cat1, for: .normal)
         UIView.animate(withDuration: 0.2, animations: {
@@ -1218,7 +1218,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         sortByCat9 = false
         sortByCat10 = false
         stopSearching = false
-        recentRankRow = -1
+        likesRankRow = -1
         nextPost()
         self.categoryMenuButton.setTitle(cat2, for: .normal)
         UIView.animate(withDuration: 0.2, animations: {
@@ -1265,7 +1265,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         sortByCat9 = false
         sortByCat10 = false
         stopSearching = false
-        recentRankRow = -1
+        likesRankRow = -1
         nextPost()
         self.categoryMenuButton.setTitle(cat3, for: .normal)
         UIView.animate(withDuration: 0.2, animations: {
@@ -1312,7 +1312,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         sortByCat9 = false
         sortByCat10 = false
         stopSearching = false
-        recentRankRow = -1
+        likesRankRow = -1
         nextPost()
         self.categoryMenuButton.setTitle(cat4, for: .normal)
         UIView.animate(withDuration: 0.2, animations: {
@@ -1359,7 +1359,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         sortByCat9 = false
         sortByCat10 = false
         stopSearching = false
-        recentRankRow = -1
+        likesRankRow = -1
         nextPost()
         self.categoryMenuButton.setTitle(cat5, for: .normal)
         UIView.animate(withDuration: 0.2, animations: {
@@ -1406,7 +1406,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         sortByCat9 = false
         sortByCat10 = false
         stopSearching = false
-        recentRankRow = -1
+        likesRankRow = -1
         nextPost()
         self.categoryMenuButton.setTitle(cat6, for: .normal)
         UIView.animate(withDuration: 0.2, animations: {
@@ -1453,7 +1453,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         sortByCat9 = false
         sortByCat10 = false
         stopSearching = false
-        recentRankRow = -1
+        likesRankRow = -1
         nextPost()
         self.categoryMenuButton.setTitle(cat7, for: .normal)
         UIView.animate(withDuration: 0.2, animations: {
@@ -1500,7 +1500,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         sortByCat9 = false
         sortByCat10 = false
         stopSearching = false
-        recentRankRow = -1
+        likesRankRow = -1
         nextPost()
         self.categoryMenuButton.setTitle(cat8, for: .normal)
         UIView.animate(withDuration: 0.2, animations: {
@@ -1547,7 +1547,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         sortByCat9 = true
         sortByCat10 = false
         stopSearching = false
-        recentRankRow = -1
+        likesRankRow = -1
         nextPost()
         self.categoryMenuButton.setTitle(cat9, for: .normal)
         UIView.animate(withDuration: 0.2, animations: {
@@ -1594,7 +1594,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         sortByCat9 = false
         sortByCat10 = true
         stopSearching = false
-        recentRankRow = -1
+        likesRankRow = -1
         nextPost()
         self.categoryMenuButton.setTitle(cat10, for: .normal)
         UIView.animate(withDuration: 0.2, animations: {

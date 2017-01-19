@@ -11,7 +11,7 @@ import Firebase
 import FirebaseDatabase
 import FirebaseStorage
 
-class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate,UITextViewDelegate {
+class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate,UITextViewDelegate,UIGestureRecognizerDelegate {
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var contentTextView: UITextView!
@@ -21,6 +21,8 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
     
     var imageFileName = ""
     var imageUploadedToFirebase = false    //used to make sure photo is uploaded fully before being posted
+    var tapTerm:UITapGestureRecognizer = UITapGestureRecognizer()
+    var slidUp = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,17 +32,28 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
         self.postButton.backgroundColor = UIColor(red: 150/255, green: 10/255, blue: 10/255, alpha: 1.0)
         
-        self.contentTextView.delegate = self
         
         self.titleTextField.delegate = self
+        self.contentTextView.delegate = self
         self.titleTextField.tag = 1
-        contentTextField.tag = 0
+        self.contentTextView.tag = 0
+        
+        tapTerm = UITapGestureRecognizer(target: self, action: #selector(PostViewController.slideUp(a:)))
+        tapTerm.delegate = self
+        contentTextView.addGestureRecognizer(tapTerm)
+        
+        self.titleTextField.addTarget(self, action: #selector(PostViewController.slideUp(a:)), for: UIControlEvents.touchDown)
         
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        
+        return true
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -59,7 +72,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
         }
     }
     
-
+    
     @IBAction func postTapped(_ sender: AnyObject) {     //post to firebase databse
         if(self.imageUploadedToFirebase){
             
@@ -71,48 +84,48 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
                     
                     
                     if let user = snapshot.value as? [String: AnyObject]{
-                            let username = user["username"] as? String
-                                if let category = self.titleTextField.text{
-                                    if let content = self.contentTextView.text{
-                                        let ref = FIRDatabase.database().reference().child("posts").childByAutoId()
-                                        let key = ref.key
-                                        
-                                        let time = FIRServerValue.timestamp()
-                                        
-                                        let postObject: Dictionary<String, Any> = [
-                                            "uid" : uid,
-                                            "category" : category,
-                                            "content" : content,
-                                            "username" : username!,
-                                            "image" : self.imageFileName,
-                                            "postID": key,
-                                            "time": time
-                                        ]
-                                        
-                                        ref.setValue(postObject)
-                                        ref.child("likes").setValue(0)  //create likes saved int, set likes to zero to start
-                                        ref.child("userWhoLikedID").child("\(uid)").setValue("a")
-                                        ref.child("userWhoDisklikedID").child("\(uid)").setValue("a")
-                                        
-                                        //let ref1 = "\(ref)"
-                                        //ref.child("postID").setValue(ref1)
-                                        //print(ref1)
-                                        
-                                        
-                                        let alert = UIAlertController(title: "Success", message: "Post sent", preferredStyle: .alert)  // popup message to say posted
-                                        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) in
-                                            //runs when OK pressed, brings to main vc
-                                            let vc = self.storyboard?.instantiateViewController(withIdentifier: "MainVC")
-                                            self.present(vc!, animated: true, completion: nil)
-                                        }))
-                                        self.present(alert, animated: true, completion: nil)
-                                        
-                                        print("posted to Firebase")
-                                        self.imageUploadedToFirebase = false
-                                    }
-                                }
+                        let username = user["username"] as? String
+                        if let category = self.titleTextField.text{
+                            if let content = self.contentTextView.text{
+                                let ref = FIRDatabase.database().reference().child("posts").childByAutoId()
+                                let key = ref.key
+                                
+                                let time = FIRServerValue.timestamp()
+                                
+                                let postObject: Dictionary<String, Any> = [
+                                    "uid" : uid,
+                                    "category" : category,
+                                    "content" : content,
+                                    "username" : username!,
+                                    "image" : self.imageFileName,
+                                    "postID": key,
+                                    "time": time
+                                ]
+                                
+                                ref.setValue(postObject)
+                                ref.child("likes").setValue(0)  //create likes saved int, set likes to zero to start
+                                ref.child("userWhoLikedID").child("\(uid)").setValue("a")
+                                ref.child("userWhoDisklikedID").child("\(uid)").setValue("a")
+                                
+                                //let ref1 = "\(ref)"
+                                //ref.child("postID").setValue(ref1)
+                                //print(ref1)
+                                
+                                
+                                let alert = UIAlertController(title: "Success", message: "Post sent", preferredStyle: .alert)  // popup message to say posted
+                                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) in
+                                    //runs when OK pressed, brings to main vc
+                                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "MainVC")
+                                    self.present(vc!, animated: true, completion: nil)
+                                }))
+                                self.present(alert, animated: true, completion: nil)
+                                
+                                print("posted to Firebase")
+                                self.imageUploadedToFirebase = false
                             }
-                            
+                        }
+                    }
+                    
                     
                     
                 })
@@ -124,6 +137,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
     
     
     @IBAction func selectImageTapped(_ sender: Any) {
+        slideDown()
         let picker = UIImagePickerController()
         picker.delegate = self
         self.present(picker, animated: true, completion: nil)
@@ -164,20 +178,46 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {   //when touched close keyboard
         view.endEditing(true)
+        slideDown()
         super.touchesBegan(touches, with: event)
     }
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool        //return key pressed on title
     {
-        // Try to find next responder
-        if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
-            nextField.becomeFirstResponder()
-        } else {
-            // Not found, so remove keyboard.
-            textField.resignFirstResponder()
-        }
+                                        // remove keyboard.
+        textField.resignFirstResponder()
+        slideDown()
+        
         // Do not add a line break
         return false
     }
+    func slideUp(a: Any){               //slide view up
+        if(!slidUp){
+            UIView.animate(withDuration: 0.3, animations: {
+                self.view.frame.origin = CGPoint(x: (self.view.frame.origin.x), y: (self.view.frame.origin.y - 110))
+                })
+            
+            slidUp = true
+        }
+     }
+    func slideDown(){               //slide view down
+        if(slidUp){
+            UIView.animate(withDuration: 0.3, animations: {
+                self.view.frame.origin = CGPoint(x: (self.view.frame.origin.x), y: (self.view.frame.origin.y + 110))
+            })
+            slidUp = false
+        }
+    }
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if(text == "\n") {
+            textView.resignFirstResponder()                 //done key pressed on content
+            slideDown()
+            return false
+        }
+        return true
+    }
+    
+    
     /*
      // MARK: - Navigation
      
