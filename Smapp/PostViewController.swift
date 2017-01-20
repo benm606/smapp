@@ -38,11 +38,14 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
         self.titleTextField.tag = 1
         self.contentTextView.tag = 0
         
-        tapTerm = UITapGestureRecognizer(target: self, action: #selector(PostViewController.slideUp(a:)))
+        tapTerm = UITapGestureRecognizer(target: self, action: #selector(PostViewController.deleteCaption(a:)))
         tapTerm.delegate = self
         contentTextView.addGestureRecognizer(tapTerm)
         
         self.titleTextField.addTarget(self, action: #selector(PostViewController.slideUp(a:)), for: UIControlEvents.touchDown)
+        
+        contentTextView.text = "Caption..."
+        contentTextView.textColor = UIColor.gray
         
     }
     
@@ -65,6 +68,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
         //runs when photo is picked from library
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage{
             self.previewImageView.image = pickedImage
+            self.previewImageView.alpha = 1
             self.selectImageButton.isEnabled = false  //hide select image button
             self.selectImageButton.isHidden = true
             uploadImage(image: pickedImage)
@@ -105,7 +109,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
                                 ref.setValue(postObject)
                                 ref.child("likes").setValue(0)  //create likes saved int, set likes to zero to start
                                 ref.child("userWhoLikedID").child("\(uid)").setValue("a")
-                                ref.child("userWhoDisklikedID").child("\(uid)").setValue("a")
+                                ref.child("userWhoDislikedID").child("\(uid)").setValue("a")
                                 
                                 //let ref1 = "\(ref)"
                                 //ref.child("postID").setValue(ref1)
@@ -209,6 +213,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
         }
     }
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        
         if(text == "\n") {
             textView.resignFirstResponder()                 //done key pressed on content
             slideDown()
@@ -225,8 +230,23 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate,UINa
                 numberOfChars += 1.0
             }
         }
-        return numberOfChars < 100.0;
+                return numberOfChars < 100.0;
        
+    }
+    
+    func deleteCaption(a: Any){
+        if contentTextView.textColor == UIColor.gray {          //delete "Caption..." text
+            contentTextView.text = ""
+            contentTextView.textColor = UIColor.black
+        }
+        slideUp(a: 0)
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "Caption..."
+            textView.textColor = UIColor.gray
+        }
     }
     
     

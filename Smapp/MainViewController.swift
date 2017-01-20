@@ -549,15 +549,22 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         if(touchDown){  //make sure there was a drag
             touchDown = false
             if(selectionLikeHighlighted){     //like image selected
-                
-                likePost(likesRankIndexPath)
+                if(sortByLikes){
+                    likePost(likesRankIndexPath)
+                }else{
+                    likePost(recentRankIndexPath)
+                }
                 stopSearching = false
                 nextPost()
                 //print("Like image")
                 
             }
             if(selectionSaveHighlighted){
-                savePost(likesRankIndexPath)
+                if(sortByLikes){
+                    savePost(likesRankIndexPath)
+                }else{
+                    savePost(recentRankIndexPath)
+                }
                 stopSearching = false
                 nextPost()
                 
@@ -679,6 +686,12 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             base.child("posts").child(ref).child("userWhoDislikedID").child("\(uid)").setValue("a")
             if(a! < -4){
                 base.child("posts").child(ref).removeValue()  //if -5 likes, delete post
+                if let imageName1 = post["image"] as? String{
+                    print("\(imageName1)")
+                    FIRStorage.storage().reference().child("images/\(imageName1)").delete(completion: { (error) in //delete image in storage
+                        //print(error)
+                    })
+                }
             }
             
             
